@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html{
+    scroll-behavior: smooth;
+}
+
+@import 'helpers/variables';
+@import 'helpers/mixins';
+@import 'helpers/function';
+@import 'nav';
+@import 'form';
+@import 'detail';
+@import 'structure';
