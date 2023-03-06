@@ -7,7 +7,7 @@ a {
     color: inherit;
 }
 
-.btn {
+.btn, #shopping-list button {
     width: 100%;
     padding: 0.5em 1em;
     color: color(secondary);
@@ -46,8 +46,6 @@ main {
         border: 1px solid color(highlight);
         border-radius: 1.5em;
         margin-bottom: 6.25em;
-        scroll-margin-top: 6.25em;
-        scroll-margin-bottom: 6.25em;
         transition: 1s;
 
         &#welcome {
@@ -184,8 +182,6 @@ main {
                         }
                     }
 
-                
-
                 &:last-of-type{
                     height: auto;
                     max-width: 13em;
@@ -214,10 +210,7 @@ main {
                        margin-top: 1em;
                    }
                 }
-            }
-            
-
-            
+            } 
         }
 
         &#camera{
@@ -225,51 +218,60 @@ main {
             background-color: color(secondary);
         }
 
-        &#shopping-list,
-        &#products {
+        &#shopping-list {
             li {
-                display: flex;
-                gap: 1.5em;
-                height: auto;
-                padding: 0.5em;
+                display: block;
                 margin-top: 1em;
+                padding: 0.5em;
                 box-shadow: 1px 5px 12px 0px color(secondary);
                 border-bottom: 1px solid #ccc;
-
+                
                 &#empty-list {
                     display: none;
                 }
-
+                
                 img {
                     width: 50%;
                 }
-
-                aside {
-                    h3 {
-                        grid-area: Name;
-                        text-align: left;
-                    }
-
-                    div {
-                        display: flex;
-                        width: 100%;
-                        justify-content: space-between;
-
-                        span{
-                            color: color(button);
-                        }
-                    }
-                    
-                    section {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: start;
-                        align-items: center;
-                        margin-top: 2em;
-
-                        p {
+                
+                button {
+                    display: inline-block;
+                }
+                
+                div {
+                    display: flex;
+                    gap: 1.5em;
+                    height: auto;
+              
+                    aside {
+                        margin-bottom: 1em;
+                        h3 {
+                            grid-area: Name;
                             text-align: left;
-                            line-height: 1.5em;
+                        }
+
+                        div {
+                            display: flex;
+                            width: 100%;
+                            justify-content: space-between;
+
+                            span{
+                                width: 30%;
+                                color: color(button);
+                            }
+                        }
+                        
+                        section {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: start;
+                            align-items: center;
+                            margin-top: 2em;
+
+                            p {
+                                text-align: left;
+                                line-height: 1.5em;
+                            }
                         }
                     }
                 }
@@ -292,8 +294,7 @@ main {
     #product-detail {
         width: 100%;
         padding: 1em;
-        scroll-margin-top: 100px;
-        scroll-margin-bottom: 100px;
+        margin-bottom: 6.25em;
         transition: 1s;
 
         .heading {
@@ -336,15 +337,26 @@ main {
                 font-size: 1.5em;
             }
         }
+
+        article div {
+            width: 100%;
+            display: flex;
+            gap: 2em;
+
+            span,p{
+                width: 50%;
+            }
+
+            span{
+                text-align: right;
+            }
+        }
         
         h2 {
             margin-bottom: 1em;
         }
 
         li {
-            // display: flex;
-            // gap: 3em;
-            // padding: 0.5em;
             margin-top: 1em;
             border-bottom: 1px solid #333;
         }

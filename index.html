@@ -42,6 +42,16 @@
         <h1>Registration successful!</h1>
         <p>Please go ahead and log in.</p>
         <a href="" class="btn">Log in</a>
+    </div>      
+    
+    <div id="loading-pop-up" class="pop-up">
+        <h1>Loading...</h1>
+        <div class="slider">
+            <div></div>
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
+        </div>
     </div>    
     
     <div id="start-pop-up" class="pop-up">
@@ -51,6 +61,7 @@
             <a href="#login" class="btn">Log in</a>
             <a href="#register">Don't have an account</a>
         </div>
+        <a href="guest/#home" class="btn">Go as guest</a>
     </div>
     
     <div id="scan-pop-up" class="pop-up">
@@ -94,12 +105,12 @@
                     <label for="login-email">Email</label>
                     <input type="text" name="login-email" id="login-email">
                     
-                    <label for="login-pws">Password</label>
-                    <input type="text" name="login-pws" id="login-pws">
+                    <label for="login-psw">Password</label>
+                    <input type="text" name="login-psw" id="login-psw">
                 </fieldset>
             
                 <fieldset>
-                    <input type="submit" class="btn" value="Login">
+                    <input type="submit" class="btn" id="login-submit" value="Login">
                     <a href="" class="btn">Cancel</a>
                 </fieldset>
             </form>
@@ -152,39 +163,10 @@
         <section id="home">
         <!-- <section id="home" class="hidden"> -->
            
-            <h2>Welcome Jhon Doe</h2>
+            <h2 id="name-title"></h2>
             <div id="reader" width="200px" height="200px"></div>
             
-            <div class="go-cards">
-                <div></div>
-                <div></div>
-                <div></div>
-                
-                <div></div>
 
-                <div>
-                    <aside>
-                        <h4>Watching a movie in the evening?</h4>
-                        <p>Find something tasty but also healthy!</p>
-                    </aside>
-                    <img src="img/popcorn.png" alt="Popcorn bag">
-                </div>
-            </div>
-
-    
-            <div class="reclame">
-                <h3></h3>
-                <!-- <img src="" alt="Reclame"> -->
-            </div>
-            
-            <!-- <article>
-                <h2>Recent products</h2>
-                <p>A selection of your scaned products</p>
-    
-                <div class="recent-products" class="hidden">
-    
-                </div>
-            </article> -->
         </section>
 
       <!-- <section id="product-detail"> -->
@@ -221,26 +203,71 @@
             </li>
             <li>
                 <article>
-                    <h2>Product content</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tellus est, consequat in neque eget, finibus
-                        tristique
-                        orci. Maecenas ornare consectetur diam vitae volutpat. Nam convallis sem a justo ultrices ultricies.</p>
+                    <h2>Product values total</h2>
+                    <div>
+                        <p>Carbohydrates:</p>
+                        <span id="detail-carb"></span>
+                    </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tellus est, consequat in neque eget, finibus
-                        tristique
-                        orci. Maecenas ornare consectetur diam vitae volutpat. Nam convallis sem a justo ultrices ultricies.</p>
+                    <div>
+                        <p>Energy:</p>
+                        <span id="detail-energy"></span>
+                    </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tellus est, consequat in neque eget, finibus
-                        tristique
-                        orci. Maecenas ornare consectetur diam vitae volutpat. Nam convallis sem a justo ultrices ultricies.</p>
+                    <div>
+                        <p>Fat:</p>
+                        <span id="detail-fat"></span>
+                    </div>
+
+                    <div>
+                        <p>Saturated-fat:</p>
+                        <span id="detail-Sfat"></span>
+                    </div>
+
+                    <div>
+                        <p>Proteins:</p>
+                        <span id="detail-proteins"></span>
+                    </div>
+
+                    <div>
+                        <p>Sugars:</p>
+                        <span id="detail-sugar"></span>
+                    </div>
                 </article>
             </li>
             <li>
                 <article>
-                    <h2>Nutritional values</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tellus est, consequat in neque eget, finibus
-                        tristique
-                        orci. Maecenas ornare consectetur diam vitae volutpat. Nam convallis sem a justo ultrices ultricies.</p>
+                    <h2>Values per 100g</h2>
+                    <div>
+                        <p>Carbohydrates:</p>
+                        <span id="detail-carb-100g"></span>
+                    </div>
+                    
+                    <div>
+                        <p>Energy:</p>
+                        <span id="detail-energy-100g"></span>
+                    </div>
+                    
+                    <div>
+                        <p>Fat:</p>
+                        <span id="detail-fat-100g"></span>
+                    </div>
+                    
+                    <div>
+                        <p>Saturated-fat:</p>
+                        <span id="detail-Sfat-100g"></span>
+                    </div>
+                    
+                    <div>
+                        <p>Proteins:</p>
+                        <span id="detail-proteins-100g"></span>
+                    </div>
+                    
+                    <div>
+                        <p>Sugars:</p>
+                        <span id="detail-sugar-100g"></span>
+                    </div>
+
                 </article>
             </li>
         </ul>
@@ -292,48 +319,20 @@
                     <img src="img/card.png" alt="The app shopping card">
                 </div>
                 <div>
-                    <a href="#shopping-card" class="btn">Link Shopping card</a>
+                    <a href="" class="btn">Link Shopping card</a>
                     <button class="btn">Not now</button>
                 </div>
             </section>
 
             <section class="hidden">
                 <div>
-                    <img src="img/7893894894.png" id="card-code" alt=" Shopping card barcode">
+                    <img src="" id="card-code" alt=" Shopping card barcode">
+                    <!-- <img src="img/7893894894.png" id="card-code" alt=" Shopping card barcode"> -->
                 </div>
                 <p>Keep your body fit, and your hart too!</p>
                 <img src="img/healthy.png" alt="Health hart image">
             </section>
         </section>
-        
-        <section id="products">
-            <h1></h1>
-
-            <ul>
-                <li>
-                    <img src="img/Happy-Emoji-PNG.png" alt="">
-                    <aside>
-                        <h3>Naam product</h3>
-                        <p>3x</p>
-                    </aside>
-                </li>
-                <li>
-                    <img src="img/Happy-Emoji-PNG.png" alt="">
-                    <aside>
-                        <h3>Naam product</h3>
-                        <p>3x</p>
-                    </aside>
-                </li>
-                <li>
-                    <img src="img/Happy-Emoji-PNG.png" alt="">
-                    <aside>
-                        <h3>Naam product</h3>
-                        <p>3x</p>
-                    </aside>
-                </li>
-            </ul>
-
-        </section>        
         
         <section id="shopping-list">
         <!-- <section id="shopping-list"> -->
@@ -351,22 +350,22 @@
 
                         <fieldset>
                             <input type="radio" name="filter" id="filter-sugar" value="sugar">
-                            <label for="filter-sugar"> Sugar</label>
+                            <label for="filter-sugar">Sugar</label>
                         </fieldset>
                         
                         <fieldset>
                             <input type="radio" name="filter" id="filter-salt" value="salt">
-                            <label for="filter-salt"> Salt</label>
+                            <label for="filter-salt">Salt</label>
                         </fieldset>
 
                         <fieldset>
-                            <input type="radio" name="filter" id="filter-koolhydr" value="koolhydr">
-                            <label for="filter-koolhydr"> koolhydr</label>
+                            <input type="radio" name="filter" id="filter-carb" value="carb">
+                            <label for="filter-carb">Carbohydrates</label>
                         </fieldset>
 
                         <fieldset>
                             <input type="radio" name="filter" id="filter-proteine" value="proteine">
-                            <label for="filter-proteine"> proteine</label>
+                            <label for="filter-proteine">Proteine</label>
                         </fieldset>
 
                         <input type="submit" id="filter-submit" class="btn" value="Reset">
@@ -380,21 +379,15 @@
                     <p>Your list is empty, please scan some products to fill it up</p>
                     <img src="img/sad-angry.png" alt="A sad-angry face">
                 </li>
-                <!-- <li>
-                    <img src="img/Happy-Emoji-PNG.png" alt="">
-                    <aside>
-                        <h3>Naam product</h3>
-                        <p><span id="koolhydr"></span>Koolhydr</p>
-                        <p><span id="sugar"></span>Sugar</p>
-                        <p><span id="salt"></span>Salt</p>
-                        
-                    </aside>
-                </li> -->
             </ul>
 
             <div>
                 <h3>Poducts</h3>
-                <p>Total: <span id="filter-awnser"></span></p>
+                <aside>
+                    <p>Total: <span id="filter-awnser"></span></p>
+                    <button class="btn">Checkout</button>
+
+                </aside>
             </div>
         </section>
     </main>
@@ -403,22 +396,17 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#home"><i class="fa fa-home"></i></a>
+                    <a href="" id="nav-home"><i class="fa fa-home"></i></a>
                     <p>Home</p>
                 </li>
 
                 <li>
-                    <a href="#shopping-card"><i class="fa fa-id-card"></i></a>
+                    <a href="" id="nav-card"><i class="fa fa-id-card"></i></a>
                     <p>Shopping Card</p>
                 </li>
 
                 <li>
-                    <a href="#products"><i class="fa fa-apple"></i></a>
-                    <p>Product</p>
-                </li>
-
-                <li>
-                    <a href="#shopping-list"><i class="fa fa-shopping-basket"></i></a>
+                    <a href="" id="nav-list"><i class="fa fa-shopping-basket"></i></a>
                     <span id="shopping-list-index">0</span>
                     <p>Lijst</p>
                 </li>

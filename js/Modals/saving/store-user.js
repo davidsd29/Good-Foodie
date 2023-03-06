@@ -2,10 +2,10 @@ import {DisplayTaskCompletePopUp} from './store-product.js';
 
 function SaveUser(user) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
+    console.log(users);
 
     if (users.length === 0) {
       console.log("no users in de list");
-      console.log(user)
       localStorage.setItem("users", JSON.stringify([user]));
     } else {
         users.push(user);

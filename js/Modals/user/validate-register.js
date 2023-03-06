@@ -11,7 +11,7 @@ const registerForm = {
     submit: document.getElementById("registration-sumbit")
 }
 
-const data = [];
+const data = {}
 let validRegistration = false;
 let errorMessage;
 let emailErrorMessage;

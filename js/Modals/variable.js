@@ -19,7 +19,7 @@ const scan = {
     popup: document.getElementById("scan-toggle")
 } 
 
-const shopping = {
+const shoppingCard = {
   frame: document.getElementById("shopping-card"),
   button: document.querySelector("#shopping-card button"),
   invite: document.querySelector("#shopping-card >section:first-of-type"),
@@ -30,8 +30,9 @@ const popUp = {
     error: document.getElementById("error-pop-up"),
     scan: document.getElementById("scan-pop-up"),
     start: document.getElementById("start-pop-up"),
+    loading: document.getElementById("loading-pop-up"),
     registration: document.getElementById("registration-pop-up"),
     closeBtn: document.querySelectorAll(".close")
 }
 
-export{ editForm, filter, scan, shopping, popUp }
+export{ editForm, filter, scan, shoppingCard, popUp }

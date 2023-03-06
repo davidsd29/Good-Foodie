@@ -9,15 +9,14 @@ function PostProductData(barcode) {
     nutrition: editFrom.nutrition.value
   };
 
-  console.log(productData);
-
     try {
         fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+              'accept': 'application/json',
+              'Content-Type': 'application/json'
             },
-            body: productData
+            body: JSON.stringify(productData)
             })
             .then(response => response.json())
             .then(data => {

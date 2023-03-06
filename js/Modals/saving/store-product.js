@@ -1,7 +1,9 @@
-import { shopping} from '../variable.js';
+import {GetGroceriesList} from '../render-products.js';
+import {shoppingCard} from '../variable.js';
 
 const completePopUp = document.getElementById("complete-pop-up");
 const completePopUTpext = document.querySelector("#complete-pop-up p");
+const listFrame = document.getElementById("list-frame");
 
 function DisplayTaskCompletePopUp(message) {
     completePopUp.classList.add("open");
@@ -17,6 +19,11 @@ function SaveProduct(product) {
       console.log("no products in de list");
       localStorage.setItem("groceries", JSON.stringify([product]));
     } else {
+
+    // Empty groceriesList before adding new items
+    while (listFrame.lastElementChild) {
+        listFrame.removeChild(listFrame.lastElementChild);
+    }
 
       groceriesList.forEach(listItem => {
         if (product.productCode === listItem.productCode) {
@@ -48,6 +55,25 @@ function DeleteProduct(product) {
   DisplayTaskCompletePopUp("Product has successfully been deleted")
 }
 
+function DeleteAllProducts() {
+  const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
+
+    for (let i = 0; i <= groceriesList.length; i++) {;
+      // groceriesList.splice(groceriesList.indexOf(i), 1);
+      console.log(groceriesList.length)
+      groceriesList.pop();
+
+      if (groceriesList.length == 0) {
+        // Set the new list back in localstorage
+        localStorage.setItem("groceries", JSON.stringify(groceriesList));
+        DisplayTaskCompletePopUp("Groceries has successfully been deleted");
+        GetGroceriesList();
+      }
+
+    }
+
+}
+
 
 function SaveShoppingCard(barcode) {
   const shoppingCardBarcode = JSON.parse(localStorage.getItem("shoppingCard") || "[]");
@@ -57,8 +83,8 @@ function SaveShoppingCard(barcode) {
     localStorage.setItem("shoppingCardBarcode", JSON.stringify(barcode));
     DisplayTaskCompletePopUp("Shopping card is saved successfully")
   } else {
-      shopping.card.classList.remove("hidden");
-      shopping.invite.classList.add("hidden");
+      shoppingCard.card.classList.remove("hidden");
+      shoppingCard.invite.classList.add("hidden");
   }
 }
 
@@ -72,15 +98,16 @@ function DeleteShoppingCard(barcode) {
   // Set the new list back in localstorage
   localStorage.setItem("shoppingCard", JSON.stringify(cardBarcode));
   DisplayTaskCompletePopUp("Shopping Card has successfully been deleted")
-  shopping.card.classList.add("hidden");
-  shopping.invite.classList.remove("hidden");
+  shoppingCard.card.classList.add("hidden");
+  shoppingCard.invite.classList.remove("hidden");
 }
 
 
 export { 
   SaveProduct, 
   DeleteProduct, 
-  SaveShoppingCard, 
+  SaveShoppingCard,
+  DeleteAllProducts, 
   DeleteShoppingCard,
   DisplayTaskCompletePopUp 
 };

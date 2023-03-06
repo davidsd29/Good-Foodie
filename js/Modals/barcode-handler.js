@@ -3,34 +3,39 @@ import {scan, popUp} from './variable.js';
 const camera = {
      scanner: new Html5Qrcode("scanner"),
      frame: document.getElementById("camera")
-
 }
+
+let camIsLoading = true;
 
 const fileCodeReader = new Html5Qrcode("reader");
 const errorText = document.getElementById("error-text");
 
-
 // Start scanning of the camera for product
 function ScanProductBarcode () {
+    CheckLoadingState();
     camera.frame.classList.remove("hidden");
     // Set delay on appearance of stopscan button
     setTimeout(function() {scan.stop.style.display = "block";}, 1400);
 
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     const qrCodeSuccessCallback = (barcode) => {
+
+    const hash = window.location.hash; // Get the hash from the URL
+    const linkParts = hash.split('/'); // Split the hash into an array of parts
+
         // // return data; 
         StopCameraScan();
-        window.location.hash = `#product/${barcode}`;
+        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
         GetRouter();
     };
 
+    camIsLoading = false;
     camera.scanner.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
-    
     .catch((err) => {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
 
         // action sap
-        // let barcode = 8718858613977;
+        let barcode = 8718858613977;
 
         // vitamine water
         // let barcode = 8715600243949;
@@ -40,13 +45,21 @@ function ScanProductBarcode () {
 
         // Energy
         // let barcode = 8710624030667;
-        // window.location.hash = `#product/${barcode}`;
+
+        const hash = window.location.hash; // Get the hash from the URL
+        const linkParts = hash.split('/'); // Split the hash into an array of parts
+        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
 
 
-        DisplayErrorPopUp(err);
+        // DisplayErrorPopUp(err);
     });
 }
 
+function CheckLoadingState() {
+    if (camIsLoading) {
+        console.log("loading");
+    } else console.log(" not loading");
+}
 
 // Stops scanning of the camera
 function StopCameraScan() {
@@ -82,7 +95,6 @@ function GetFileBarcode(event) {
     .then(barcode => {
     // barcode succes = true
     window.location.hash = `#product/${barcode}`;
-    console.log(barcode);
     fileCodeReader.clear();
     
     })

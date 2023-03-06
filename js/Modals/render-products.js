@@ -1,4 +1,4 @@
-import {filter} from './variable.js';
+import {filter, popUp} from './variable.js';
 import { FetchGroceriesList} from '../API/fetch-product.js';
 
 const filterToggle = document.querySelector("input[name='open-filter']");
@@ -6,68 +6,86 @@ const filterSumbit = document.getElementById("filter-submit");
 const listFeedback = document.getElementById("empty-list");
 const listFrame = document.getElementById("list-frame");
 
+let dataIsLoading = false;
+
 let totalSugars = 0,
     totalSalt = 0,
     totalProteins = 0,
-    totalKoolhydr = 0,
+    totalCarb = 0,
     productAmount = 0;
 
 function RenderGroceriesListProduct (productInfo, productAmount) {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
     let listItem;
 
-    for (let index = 0; index < groceriesList.length; index++) { 
+    dataIsLoading = true;
+    popUp.loading.classList.add("open");
 
-        // if ( listFrame.childElementCount !== groceriesList.length) {
+    if (productInfo.product_name !="") { 
+        dataIsLoading = false;
+        popUp.loading.classList.remove("open");
+    }
 
-            totalSugars = totalSugars + productInfo.nutriments.sugars;
-            totalSalt = totalSalt + productInfo.nutriments.salt;
-            totalProteins = totalProteins + productInfo.nutriments.proteins;
-            totalKoolhydr = totalKoolhydr + productInfo.nutriments.carbohydrates;
+    if (!dataIsLoading) {
+        for (let index = 0; index < groceriesList.length; index++) { 
 
-            if (productInfo.nutriments.sugars === null) productInfo.nutriments.sugars = 0;
-            if (productInfo.nutriments.salt === null) productInfo.nutriments.salt = 0;
-            if (productInfo.nutriments.proteins === null) productInfo.nutriments.proteins = 0;
-            if (productInfo.nutriments.carbohydrates === null) productInfo.nutriments.carbohydrates = 0;
+            if (productInfo.product_name != ""){
+                popUp.loading.classList.remove("open");
+            }
+            // if ( listFrame.childElementCount !== groceriesList.length) {
 
-            const xmlString  =
-                `<li> 
-                    <img src='${productInfo.image_url}' alt='${productInfo.product_name}'></img>
-                    <aside>
+                totalSugars = totalSugars + productInfo.nutriments.sugars;
+                totalSalt = totalSalt + productInfo.nutriments.salt;
+                totalProteins = totalProteins + productInfo.nutriments.proteins;
+                totalCarb = totalCarb + productInfo.nutriments.carbohydrates;
+
+                if (productInfo.nutriments.sugars === null) productInfo.nutriments.sugars = 0;
+                if (productInfo.nutriments.salt === null) productInfo.nutriments.salt = 0;
+                if (productInfo.nutriments.proteins === null) productInfo.nutriments.proteins = 0;
+                if (productInfo.nutriments.carbohydrates === null) productInfo.nutriments.carbohydrates = 0;
+
+                const xmlString  =
+                    `<li> 
                         <div>
-                            <h3>${productInfo.product_name}</h3>
-                            <span>${productAmount} x</span>
+                            <img src='${productInfo.image_url}' alt='${productInfo.product_name}'></img>
+                            <aside>
+                                <div>
+                                    <h3>${productInfo.product_name}</h3>
+                                    <span>${productAmount} x</span>
+                                </div>
+
+                                <section>
+                                    <div>
+                                        <p>Proteins:</p>
+                                        <p id='proteins'>${productInfo.nutriments.proteins} g</p>
+                                    </div>
+                                    <div>
+                                        <p>Carbs:</p>
+                                        <p id='carb'>${productInfo.nutriments.carbohydrates} g</p>
+                                    </div>
+                                    <div>
+                                        <p>Sugar:</p>
+                                        <p id='sugar'>${productInfo.nutriments.sugars} g</p>
+                                    </div>
+                                    <div>
+                                        <p>Salt:</p>
+                                        <p id='salt'>${productInfo.nutriments.salt} g</p>
+                                    </div>
+                                </section>
+                            </aside>
                         </div>
+                            
+                        <button class="list-delete" value="${productInfo.id}">Delete</button>
+                    </li> `;
 
-                        <section>
-                            <div>
-                                <p>Proteins:</p>
-                                <p id='proteins'>${productInfo.nutriments.proteins} g</p>
-                            </div>
-                            <div>
-                                <p>Koolhydr:</p>
-                                <p id='koolhydr'>${productInfo.nutriments.carbohydrates} g</p>
-                            </div>
-                            <div>
-                                <p>Sugar:</p>
-                                <p id='sugar'>${productInfo.nutriments.sugars} g</p>
-                            </div>
-                            <div>
-                                <p>Salt:</p>
-                                <p id='salt'>${productInfo.nutriments.salt} g</p>
-                            </div>
-                        </section>
-                    </aside>
-                </li> `;
-
-                listItem = new DOMParser().parseFromString(xmlString, "text/xml");
-            // }
+                    listItem = new DOMParser().parseFromString(xmlString, "text/xml");
+                // }
+        }
     }
 
     // Append to another element:
     listFrame.appendChild(listItem.documentElement);
 }
-
 
 function GetGroceriesList() {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
@@ -105,5 +123,5 @@ export {
     totalSugars,
     totalSalt,
     totalProteins,
-    totalKoolhydr
+    totalCarb
 }
