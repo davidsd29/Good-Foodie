@@ -1,4 +1,4 @@
-import { shopping} from './variable.js';
+import { shopping} from '../variable.js';
 
 const completePopUp = document.getElementById("complete-pop-up");
 const completePopUTpext = document.querySelector("#complete-pop-up p");
@@ -12,7 +12,7 @@ function DisplayTaskCompletePopUp(message) {
 
 function SaveProduct(product) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-console.log(product)
+  console.log(product)
     if (groceriesList.length == 0) {
       console.log("no products in de list");
       localStorage.setItem("groceries", JSON.stringify([product]));
@@ -76,4 +76,11 @@ function DeleteShoppingCard(barcode) {
   shopping.invite.classList.remove("hidden");
 }
 
-export { SaveProduct, DeleteProduct, SaveShoppingCard, DeleteShoppingCard};
+
+export { 
+  SaveProduct, 
+  DeleteProduct, 
+  SaveShoppingCard, 
+  DeleteShoppingCard,
+  DisplayTaskCompletePopUp 
+};

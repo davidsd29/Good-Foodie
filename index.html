@@ -88,7 +88,7 @@
         </section>         
         
         <section id="login">
-            <form action="">
+            <form id="login-form">
                 <img src="img/logo.png" alt="Goodie Foodie logo">
                 <fieldset>
                     <label for="login-email">Email</label>
@@ -106,27 +106,44 @@
         </section> 
         
         <section id="register">
-            <form action="" id="register-form">
+            <form id="registration-form">
                 <fieldset>
                     <h1>Registration</h1>
                     <img src="img/logo.png" alt="Goodie Foodie logo">
                 </fieldset>
 
-                <label for="first-name">Name</label>
-                <input type="text" name="first-name" id="first-name" placeholder="Enter your first name" required>
+                <fieldset class="form-field form-field-required">
+                    <label for="registration-name">Name</label>
+                    <input type="text" name="name" id="registration-name" placeholder="Enter your first name" >
+                </fieldset>
 
-                <label for="surname">Surname</label>
-                <input type="text" name="surname" id="surname" placeholder="Enter your surname" required>
+                <fieldset class="form-field form-field-required">
+                    <label for="registration-surname">Surname</label>
+                    <input type="text" name="surname" id="registration-surname" placeholder="Enter your surname" >
+                </fieldset>                
                 
-                <label for="email"> E-mail</label>
-                <input type="email" name="email" id="email" placeholder="Enter e-mail adress" required>
+                <fieldset>
+                    <label for="form-field registration-tel">Mobile number</label>
+                    <input type="tel" name="tel" id="registration-tel" placeholder="Enter your mobile number">
+                </fieldset>
 
-                <label for="psw">Password</label>
-                <input type="password" name="psw" id="psw" placeholder="Enter password">
-                <input type="password" name="psw-repeat" id="psw-repeat" placeholder="Please repeat password">
+                <fieldset class="form-field form-field-required">
+                    <label for="registration-email"> E-mail</label>
+                    <p id="error-email" class="error-text"></p>
+                    <input type="email" name="email" id="registration-email" placeholder="Enter e-mail adress" >
+                </fieldset>
+    
+                <fieldset class="form-field form-field-required">
+                    <label for="registration-psw">Password</label>
+                    <p> * Password must be 8 characters long</p>
+                    <p id="error-pws" class="error-text">Passwoord are not the same, please try again.</p>
+                    <input type="password" name="psw" id="registration-psw" placeholder="Enter password" pattern="^.{8}$">
+                </fieldset>
+
+                <input type="password" name="psw-repeat" id="psw-repeat" placeholder="Please repeat password" pattern="^.{8}$">
 
                 <fieldset>
-                    <input type="submit" class="btn" value="Register">
+                    <input type="submit" id="registration-sumbit" class="btn" value="Register">
                     <a href="" class="btn">Cancel</a>
                 </fieldset>
             </form>

@@ -1,4 +1,4 @@
-import {SaveProduct} from './localstorage.js';
+import {SaveProduct} from './saving/store-product.js';
 
 let counter = 0;
 let shoppingCartAmount = 0;

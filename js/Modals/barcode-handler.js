@@ -39,11 +39,11 @@ function ScanProductBarcode () {
         // let barcode = 87365290;
 
         // Energy
-        let barcode = 8710624030667;
-        window.location.hash = `#product/${barcode}`;
+        // let barcode = 8710624030667;
+        // window.location.hash = `#product/${barcode}`;
 
 
-        // DisplayErrorPopUp(err);
+        DisplayErrorPopUp(err);
     });
 }
 

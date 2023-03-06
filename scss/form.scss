@@ -59,6 +59,7 @@ form {
             }
         }
     }
+
     fieldset {
         &:first-of-type {
             justify-content: space-between;
@@ -86,7 +87,61 @@ form {
             height: 9em;
             object-fit: contain;
         }
-    }  
+    }
+    
+    &#registration-form {
+
+        fieldset:has(input:valid:not(:placeholder-shown)):not(:last-of-type) input{
+            background-color: #b0ffb0;
+        }   
+
+        fieldset:nth-of-type(5),
+        fieldset:nth-of-type(6) {
+        display: grid;
+
+            p {
+                font-size: .5em;
+                font-style: italic;
+                opacity: .5;
+                margin: .4em 0;
+
+                &.error-text {
+                    display: none;
+                    opacity: 1;
+                    color: red;
+                    font-style: italic;
+                }
+            }
+        }
+
+        .form-field-required {
+            label {
+                position: relative;
+            }
+
+            label::after {
+                content: "*";
+                color: color(indicator);
+                position: absolute;
+                top: -4px;
+                padding-left: 5px;
+            }
+
+            &.invalid {
+                input {
+                    border: 2px solid red;
+
+                    &::placeholder {
+                        color: red;
+                        font-style: italic;
+                    }
+
+                }
+
+            }
+        }
+
+    }
 }
 
 fieldset {

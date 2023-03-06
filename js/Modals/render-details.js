@@ -1,5 +1,5 @@
 import {SetProduct} from './set-list.js';
-import {form} from './variable.js';
+import {editForm} from './variable.js';
 
 const product = {
     img: document.querySelector(".heading img"),
@@ -50,12 +50,12 @@ function EditProduct(product, barcode) {
 
     console.log(product.product_name);
     // form.name.setAttribute("value", `${product.product_name}`);
-    form.name.value = product.product_name;
+    editForm.name.value = product.product_name;
 
-    form.savedImg.setAttribute("src", `${product.image_url}`);
-    form.sugar.value = product.nutriments.sugars;
-    form.salt.value = product.nutriments.salt;
-    form.nutrition.value = product.nutrition_grades;
+    editForm.savedImg.setAttribute("src", `${product.image_url}`);
+    editForm.sugar.value = product.nutriments.sugars;
+    editForm.salt.value = product.nutriments.salt;
+    editForm.nutrition.value = product.nutrition_grades;
 }
 
 export { RenderProduct, EditProduct };

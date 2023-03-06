@@ -1,6 +1,5 @@
-import {RenderProduct} from '../render-details.js';
-import {EditProduct} from '../render-details.js';
-import {RenderGroceriesListProduct} from '../render-products.js';
+import {RenderProduct, EditProduct} from '../Modals/render-details.js';
+import {RenderGroceriesListProduct} from '../Modals/render-products.js';
 
 
 function GetProductData(barcode) {

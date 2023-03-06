@@ -1,5 +1,5 @@
 import {filter} from './variable.js';
-import { FetchGroceriesList} from './API/fetch-product.js';
+import { FetchGroceriesList} from '../API/fetch-product.js';
 
 const filterToggle = document.querySelector("input[name='open-filter']");
 const filterSumbit = document.getElementById("filter-submit");

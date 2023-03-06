@@ -1,4 +1,4 @@
-const form = {
+const editForm = {
   name: document.getElementById("product-name"),
   savedImg: document.getElementById("saved-product-img"),
   img: document.getElementById("product-img").src,
@@ -34,4 +34,4 @@ const popUp = {
     closeBtn: document.querySelectorAll(".close")
 }
 
-export{ form, filter, scan, shopping, popUp }
+export{ editForm, filter, scan, shopping, popUp }

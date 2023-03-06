@@ -1,6 +1,8 @@
-import {GetRouter} from './router.js';
-import {ScanProductBarcode , StopCameraScan, GetFileBarcode} from './barcode-handler.js';
-import {scan, shopping, popUp} from './variable.js';
+import {GetRouter} from './Modals/router.js';
+import {ScanProductBarcode , StopCameraScan, GetFileBarcode} from './Modals/barcode-handler.js';
+import {scan, shopping, popUp} from './Modals/variable.js';
+import {CheckRegister} from './Modals/user/validate-register.js';
+import {CheckLogin} from './Modals/user/login.js';
 import {PostProductData} from './API/post-product.js';
 
 const fileinput = document.getElementById("qr-input-file");
@@ -10,6 +12,8 @@ const welcomeBtn = document.querySelector("#welcome button");
 const form = {
     edit: document.getElementById("edit-product-form"),
     filter: document.getElementById("filters"),
+    register: document.getElementById("registration-sumbit"),
+    login: document.querySelector("registration-sumbit input[type='submit']"),
 }
 
 const welcomeButtons = document.querySelectorAll("#start-pop-up a");
@@ -34,6 +38,14 @@ form.edit.addEventListener("sumbit", (e) => {
     e.preventDefault();
     const barcode = GetCodeFromUrl();
     PostProductData(barcode);
+});
+
+form.register.addEventListener("click", (e) => {
+    CheckRegister(e);
+});
+
+form.login.addEventListener("click", (e) => {
+    CheckLogin(e);
 });
 
 welcomeBtn.addEventListener("click", () => {

@@ -1,8 +1,8 @@
-import {GetProductData, GetSelectedProductData} from './API/fetch-product.js';
+import {GetProductData, GetSelectedProductData} from '../API/fetch-product.js';
 import {FilterProduct} from './filter-products.js';
 import {GetGroceriesList} from './render-products.js';
 import {ScanCardBarcode} from './barcode-handler.js';
-import {CreateBarcodeImage} from './API/create-card.js';
+import {CreateBarcodeImage} from '../API/create-card.js';
 import {shopping} from './variable.js';
 
 const page = {
@@ -53,10 +53,12 @@ function HideAllPages() {
     if (!page.register.classList.contains("hidden"))       page.register.classList.add("hidden");
     if (!page.login.classList.contains("hidden"))          page.login.classList.add("hidden");
 }
+
 function RemoveNavigation() {
     nav.footer.classList.add("hidden");
     nav.header.classList.add("hidden");
 }
+
 function DisplayNavigation() {
     if (nav.footer.classList.contains("hidden"))          nav.footer.classList.remove("hidden");
     if (nav.header.classList.contains("hidden"))          nav.header.classList.remove("hidden");

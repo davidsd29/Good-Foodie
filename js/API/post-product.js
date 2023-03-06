@@ -1,12 +1,12 @@
-import {form} from '../variable.js';
+import { editForm } from '../Modals/variable.js';
 
 function PostProductData(barcode) {
   const productData = {
-    name: form.name.value,
+    name: editFrom.name.value,
     // img: form.img,
-    sugar: form.sugar.value,
-    salt: form.salt.value,
-    nutrition: form.nutrition.value
+    sugar: editFrom.sugar.value,
+    salt: editFrom.salt.value,
+    nutrition: editFrom.nutrition.value
   };
 
   console.log(productData);
