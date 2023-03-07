@@ -35,10 +35,10 @@ function ScanProductBarcode () {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
 
         // action sap
-        let barcode = 8718858613977;
+        // let barcode = 8718858613977;
 
         // vitamine water
-        // let barcode = 8715600243949;
+        let barcode = 8715600243949;
 
         // AA
         // let barcode = 87365290;

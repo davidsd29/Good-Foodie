@@ -1,4 +1,4 @@
-import {GetGroceriesList} from '../render-products.js';
+import {GetGroceriesList, CheckListAmount} from '../render-products.js';
 import {shoppingCard} from '../variable.js';
 
 const completePopUp = document.getElementById("complete-pop-up");
@@ -14,7 +14,6 @@ function DisplayTaskCompletePopUp(message) {
 
 function SaveProduct(product) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-  console.log(product)
     if (groceriesList.length == 0) {
       console.log("no products in de list");
       localStorage.setItem("groceries", JSON.stringify([product]));
@@ -27,14 +26,12 @@ function SaveProduct(product) {
 
       groceriesList.forEach(listItem => {
         if (product.productCode === listItem.productCode) {
-          console.log("hallo")
           listItem.productAmount = listItem.productAmount + product.productAmount;
         } else {
           groceriesList.push(product);
         }
       });
 
-      console.log("product saved");
       localStorage.setItem("groceries", JSON.stringify(groceriesList));
 
       DisplayTaskCompletePopUp("Product is saved successfully")
@@ -43,7 +40,7 @@ function SaveProduct(product) {
 
 
 // Remove the story from localstorage
-function DeleteProduct(product) {
+function DeleteProduct(product, listItem) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
   
   // Get index of the product
@@ -52,8 +49,15 @@ function DeleteProduct(product) {
   
   // Set the new list back in localstorage
   localStorage.setItem("groceries", JSON.stringify(groceriesList));
-  DisplayTaskCompletePopUp("Product has successfully been deleted")
+  DisplayTaskCompletePopUp("Product has successfully been deleted");
+
+  // Remove list HTML Item
+  listItem.remove();
+  CheckListAmount(groceriesList.length);
+
+
 }
+
 
 function DeleteAllProducts() {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
@@ -71,7 +75,6 @@ function DeleteAllProducts() {
       }
 
     }
-
 }
 
 

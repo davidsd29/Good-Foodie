@@ -15,7 +15,6 @@ count.counterIndex.textContent = counter;
 if (counter < 0) counter = 0;
 
 function SetProduct(barcode) {
-
     const obj = { 
         productCode: barcode,
         productAmount: counter 
@@ -26,8 +25,7 @@ function SetProduct(barcode) {
         CheckShoppingList(counter);
 
         counter = 0;
-        count.counterIndex.textContent = counter;
-        
+        count.counterIndex.textContent = counter;  
     } else {
         count.counterIndex.classList.add("required");
         console.log("Please give an amount");

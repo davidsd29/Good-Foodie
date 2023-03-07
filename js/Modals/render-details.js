@@ -42,23 +42,22 @@ const addButton = document.getElementById("add-item");
 
 // Render prodcut and updating the UI
 function RenderProduct(productInfo, barcode) {
-    dataIsLoading = true;
-    popUp.loading.classList.add("open");
 
-    if (productInfo !=null) { 
+    if ( product.img.src === "") { 
+        dataIsLoading = true;
+        setTimeout(function() {popUp.loading.classList.add("open");}, 2000);
+    } else {
         dataIsLoading = false;
         popUp.loading.classList.remove("open");
     }
 
     if (!dataIsLoading) {
 
-        // detailPage.classList.remove("hidden");
-        console.log(productInfo);
         product.name.textContent = `${productInfo.product_name}`;
         product.img.setAttribute("src", `${productInfo.image_url}`);
         product.img.setAttribute("alt", `${productInfo.product_name}`);
 
-        if (productInfo.nutriscore_grade !== null) GetNutrionGrade(productInfo);
+        if (productInfo.nutriscore_grade !== 'undefined') GetNutrionGrade(productInfo);
         SetProductValues(productInfo);
 
         addButton.addEventListener("click",() => {
