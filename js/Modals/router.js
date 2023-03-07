@@ -1,7 +1,7 @@
-import {GetProductData, GetSelectedProductData} from '../API/fetch-product.js';
+import {GetProductData} from '../API/fetch-product.js';
 import {FilterProduct} from './filter-products.js';
 import {GetGroceriesList} from './render-products.js';
-import {ScanCardBarcode} from './barcode-handler.js';
+import {StartCameraScan} from './barcode-handler.js';
 import {CreateBarcodeImage} from '../API/create-card.js';
 import {shoppingCard} from './variable.js';
 
@@ -15,13 +15,13 @@ const page = {
     register: document.getElementById("register"),
     login: document.getElementById("login"),
 }
-const listFilter = document.getElementById("filters");
 
 const nav = {
     footer: document.querySelector("footer"),
     header: document.querySelector("header")
 }
 
+const listFilter = document.getElementById("filters");
 const errorPopUp = document.getElementById("error-pop-up");
 const completePopUTpext = document.querySelector("#error-pop-up p");
 
@@ -52,7 +52,6 @@ function HideAllPages() {
     if (!page.register.classList.contains("hidden"))       page.register.classList.add("hidden");
     if (!page.login.classList.contains("hidden"))          page.login.classList.add("hidden");
     if (!listFilter.classList.contains("hidden"))          listFilter.classList.add("hidden"); 
-    
 }
 
 function RemoveNavigation() {
@@ -70,8 +69,7 @@ function GetRouter() {
     const linkParts = hash.split('/'); // Split the hash into an array of parts
 
     if (linkParts.length > 1) {
-        switch (linkParts[1]) { // Check which part of the hash we're dealing with
-            
+        switch (linkParts[1]) { // Check which part of the hash we're dealing with 
             case "#home":
 
                 CheckCardExist();
@@ -97,7 +95,7 @@ function GetRouter() {
             case "#product":
                 if (linkParts.length >= 3) {
                     const barcode = linkParts[2]; // Get the ID from the hash
-                    GetProductData(barcode);
+                    GetProductData(barcode, "product");
                 }
 
                 HideAllPages();
@@ -111,7 +109,7 @@ function GetRouter() {
                     const barcode = linkParts[2]; // Get the ID from the hash
                     CreateBarcodeImage(barcode);
                 } else {
-                    ScanCardBarcode();
+                    StartCameraScan("shopping-card");
                     // CreateBarcodeImage(number);
                 }
 
@@ -124,7 +122,7 @@ function GetRouter() {
 
                 if (linkParts.length >= 3) {
                     const barcode = linkParts[2]; // Get the ID from the hash
-                    GetSelectedProductData(barcode);
+                    GetProductData(barcode, "edit");
                 }
 
                 HideAllPages();
@@ -133,7 +131,7 @@ function GetRouter() {
             
             default:
                 DisplayTaskCompletePopUp("We couldn't find the url you are looking for.")
-                window.location.hash = "#home";
+                window.location.hash = "";
         }
     } else {
         switch (linkParts[0]) { // Check which part of the hash we're dealing with
@@ -156,7 +154,11 @@ function GetRouter() {
                 HideAllPages();
                 RemoveNavigation()
                 page.login.classList.remove("hidden");
-            break;  
+            break; 
+            
+            default:
+                DisplayTaskCompletePopUp("We couldn't find the url you are looking for.");
+                window.location.hash = "";
         }
     }
 }

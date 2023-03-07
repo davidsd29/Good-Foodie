@@ -1,5 +1,5 @@
 import {GetRouter} from './Modals/router.js';
-import {ScanProductBarcode , StopCameraScan, GetFileBarcode} from './Modals/barcode-handler.js';
+import {StartCameraScan , StopCameraScan, GetFileBarcode} from './Modals/barcode-handler.js';
 import {scan, shoppingCard, popUp} from './Modals/variable.js';
 import {CheckRegister} from './Modals/user/validate-register.js';
 import {CheckLogin} from './Modals/user/login.js';
@@ -101,7 +101,7 @@ shoppingCard.button.addEventListener("click", () => {
 
 scan.stop.addEventListener("click", StopCameraScan);
 scan.start.addEventListener("click", () => {
-    ScanProductBarcode();
+    StartCameraScan("product");
     popUp.scan.classList.remove("open")
 }); 
 

@@ -1,31 +1,46 @@
 import {RenderProduct, EditProduct} from '../Modals/render-details.js';
 import {RenderGroceriesListProduct} from '../Modals/render-products.js';
 
-
-function GetProductData(barcode) {
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
-    .then((response) => response.json())
-    .then(( data => {
-        RenderProduct(data.product, barcode);
-    }));
+// Check input and give correct fetch link
+function GetFetchLink (type, barcode) {
+    if (type === "string"){
+        return fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+    } else {
+        return fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode.productCode}.json`);   
+    }
 }
 
-function GetSelectedProductData(barcode) {
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
+// Fetch Product Data
+function GetProductData(barcode, dataType) {
+    let fetchlink = GetFetchLink(typeof(barcode), barcode);
+
+    fetchlink
     .then((response) => response.json())
     .then(( data => {
-        EditProduct(data.product, barcode);
-    }));
+
+        switch (dataType) {
+            case "product":
+
+                // Product Detail
+                RenderProduct(data.product, barcode);
+                break; 
+
+            case "edit":
+
+                // Edit product
+                EditProduct(data.product, barcode);
+                break;  
+
+            case "listItem":
+
+                // Groceries List
+                RenderGroceriesListProduct(data.product, barcode.productAmount);
+                break; 
+
+            default:
+                console.log("data type found");
+        }
+    })).catch((err) => { console.log(err) });
 }
 
-function FetchGroceriesList(item) {          
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${item.productCode}.json`)
-    .then((response) => response.json())
-    .then(( data => {
-            RenderGroceriesListProduct(data.product, item.productAmount);
-        }));
-} 
-
-
-// GetGroceriesListData();
-export { GetProductData, FetchGroceriesList, GetSelectedProductData };
+export { GetProductData };

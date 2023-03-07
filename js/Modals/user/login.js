@@ -5,14 +5,14 @@ const login = {
     psw: document.getElementById("login-psw"),
 }
 
-const nameTitle = document.getElementById("name-title");
-const shoppingCradAccept= document.querySelector("#shopping-card a")
-const shoppingCradDecline= document.querySelector("#shopping-card button")
 const navigation = {
     home: document.getElementById("nav-home"),
     card: document.getElementById("nav-card"),
     list: document.getElementById("nav-list"),
 }
+
+const nameTitle = document.getElementById("name-title");
+const shoppingCradAccept = document.querySelector("#shopping-card a")
 
 function SetNavigation (id, name) {
     navigation.home.setAttribute("href", `#id=${id}&${name}/#home`);
@@ -33,13 +33,12 @@ function CheckLogin(event) {
         users.forEach(user => {
             if (login.email.value === user.email && login.psw.value === user.psw) {
                 console.log("user exist log in succesful")
-                  const userIndex = users.indexOf(user);
-                  console.log(userIndex);
-                  
-                    window.location.hash = `#id=${userIndex}&${user.name}/#home`;
-                    nameTitle.textContent = `Welcome ${user.name}`;
-                    SetNavigation(userIndex, user.name)
-                    GetRouter();
+                const userIndex = users.indexOf(user);
+                console.log(userIndex);
+                
+                window.location.hash = `#id=${userIndex}&${user.name}/#home`;
+                nameTitle.textContent = `Welcome ${user.name}`;
+                SetNavigation(userIndex, user.name)
 
             } else if (login.email.value === user.email && login.psw.value !== user.pws) {
                 console.log("wrong email or passwoord. please try again")

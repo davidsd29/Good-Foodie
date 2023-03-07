@@ -11,26 +11,33 @@ const fileCodeReader = new Html5Qrcode("reader");
 const errorText = document.getElementById("error-text");
 
 // Start scanning of the camera for product
-function ScanProductBarcode () {
+function StartCameraScan (type) {
     CheckLoadingState();
     camera.frame.classList.remove("hidden");
+
     // Set delay on appearance of stopscan button
     setTimeout(function() {scan.stop.style.display = "block";}, 1400);
 
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     const qrCodeSuccessCallback = (barcode) => {
 
-    const hash = window.location.hash; // Get the hash from the URL
-    const linkParts = hash.split('/'); // Split the hash into an array of parts
+        const hash = window.location.hash; // Get the hash from the URL
+        const linkParts = hash.split('/'); // Split the hash into an array of parts
 
-        // // return data; 
         StopCameraScan();
-        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
-        GetRouter();
+        
+        // Set data in URL; 
+        if( type === "product"){
+            window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+        } else {
+            window.location.hash = `${linkParts[0]}/#shopping-card/${barcode}`;
+        }
     };
 
     camIsLoading = false;
-    camera.scanner.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
+    
+    camera.scanner
+    .start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
     .catch((err) => {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
 
@@ -55,11 +62,6 @@ function ScanProductBarcode () {
     });
 }
 
-function CheckLoadingState() {
-    if (camIsLoading) {
-        console.log("loading");
-    } else console.log(" not loading");
-}
 
 // Stops scanning of the camera
 function StopCameraScan() {
@@ -69,7 +71,7 @@ function StopCameraScan() {
         // QR Code scanning is stopped.
         // Clears scanning instance. Stops the camera
         camera.scanner.clear();
-
+        
         // Removes reader element from DOM since no longer needed
         // document.getElementById("scanner").remove();
     })
@@ -82,21 +84,23 @@ function StopCameraScan() {
 
 function GetFileBarcode(event) {
     popUp.scan.classList.remove("open");
-
+    
     if (event.target.files.length == 0) {
         DisplayErrorPopUp("no file found");
         return;
     }
-
+    
     const imageFile = event.target.files[0];
-
+    
     // Scan QR Code
     fileCodeReader.scanFile(imageFile, true)
     .then(barcode => {
-    // barcode succes = true
-    window.location.hash = `#product/${barcode}`;
-    fileCodeReader.clear();
-    
+        // barcode succes = true
+        const hash = window.location.hash; // Get the hash from the URL
+        const linkParts = hash.split('/'); // Split the hash into an array of parts
+
+        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+        fileCodeReader.clear();
     })
     .catch(err => {
         fileCodeReader.clear();
@@ -105,24 +109,13 @@ function GetFileBarcode(event) {
     });
 }
 
-// Start scanning of the camera for card
-function ScanCardBarcode() {
-    camera.frame.classList.remove("hidden");
-    // Set delay on appearance of stopscan button
-    setTimeout(function() {scan.stop.style.display = "block";}, 1400);
 
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    const qrCodeSuccessCallback = (barcode) => {
-        // // return data; 
-        StopCameraScan();
-        window.location.hash = `#shopping-card/${barcode}`;
-    };
-
-    camera.scanner.start({ facingMode: "environment" }, config, qrCodeSuccessCallback).catch((err) => {
-        setTimeout(function() {scan.stop.style.display = "none";}, 1400);
-        DisplayErrorPopUp(err);
-    });
+function CheckLoadingState() {
+    if (camIsLoading) {
+        console.log("loading");
+    } else console.log(" not loading");
 }
+
 
 function DisplayErrorPopUp(errorMessage) {
     if (!camera.frame.classList.contains("hidden")) {camera.frame.classList.add("hidden");}
@@ -130,4 +123,4 @@ function DisplayErrorPopUp(errorMessage) {
     errorText.textContent = errorMessage;
 }
 
-export { ScanProductBarcode, StopCameraScan, GetFileBarcode, ScanCardBarcode };
+export { StartCameraScan, StopCameraScan, GetFileBarcode };

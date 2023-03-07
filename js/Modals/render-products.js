@@ -1,5 +1,5 @@
 import {filter, popUp} from './variable.js';
-import { FetchGroceriesList} from '../API/fetch-product.js';
+import { GetProductData} from '../API/fetch-product.js';
 import { DeleteProduct} from './saving/store-product.js';
 
 const filterToggle = document.querySelector("input[name='open-filter']");
@@ -40,55 +40,51 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
     if (!dataIsLoading) {
         for (let index = 0; index < groceriesList.length; index++) { 
 
-            if (productInfo.product_name != ""){
-                popUp.loading.classList.remove("open");
-            }
+            totalSugars =   totalSugars + productInfo.nutriments.sugars;
+            totalSalt =     totalSalt + productInfo.nutriments.salt;
+            totalProteins = totalProteins + productInfo.nutriments.proteins;
+            totalCarb =     totalCarb + productInfo.nutriments.carbohydrates;
 
-                totalSugars =   totalSugars + productInfo.nutriments.sugars;
-                totalSalt =     totalSalt + productInfo.nutriments.salt;
-                totalProteins = totalProteins + productInfo.nutriments.proteins;
-                totalCarb =     totalCarb + productInfo.nutriments.carbohydrates;
+            // If value does not exist give a value of 0
+            if (productInfo.nutriments.sugars           !== 'undefined') productInfo.nutriments.sugars = 0;
+            if (productInfo.nutriments.salt             !== 'undefined') productInfo.nutriments.salt = 0;
+            if (productInfo.nutriments.proteins         !== 'undefined') productInfo.nutriments.proteins = 0;
+            if (productInfo.nutriments.carbohydrates    !== 'undefined') productInfo.nutriments.carbohydrates = 0;
 
-                // If value does not exist give a value of 0
-                if (productInfo.nutriments.sugars           !== 'undefined') productInfo.nutriments.sugars = 0;
-                if (productInfo.nutriments.salt             !== 'undefined') productInfo.nutriments.salt = 0;
-                if (productInfo.nutriments.proteins         !== 'undefined') productInfo.nutriments.proteins = 0;
-                if (productInfo.nutriments.carbohydrates    !== 'undefined') productInfo.nutriments.carbohydrates = 0;
+            // Make HTML Block
+            const xmlString  =
+                `<li> 
+                    <div>
+                        <img src='${productInfo.image_url}' alt='${productInfo.product_name}'></img>
+                        <aside>
+                            <div>
+                                <h3>${productInfo.product_name}</h3>
+                                <span>${productAmount} x</span>
+                            </div>
 
-                // Make HTML Block
-                const xmlString  =
-                    `<li> 
-                        <div>
-                            <img src='${productInfo.image_url}' alt='${productInfo.product_name}'></img>
-                            <aside>
+                            <section>
                                 <div>
-                                    <h3>${productInfo.product_name}</h3>
-                                    <span>${productAmount} x</span>
+                                    <p>Proteins:</p>
+                                    <p id='proteins'>${productInfo.nutriments.proteins} g</p>
                                 </div>
-
-                                <section>
-                                    <div>
-                                        <p>Proteins:</p>
-                                        <p id='proteins'>${productInfo.nutriments.proteins} g</p>
-                                    </div>
-                                    <div>
-                                        <p>Carbs:</p>
-                                        <p id='carb'>${productInfo.nutriments.carbohydrates} g</p>
-                                    </div>
-                                    <div>
-                                        <p>Sugar:</p>
-                                        <p id='sugar'>${productInfo.nutriments.sugars} g</p>
-                                    </div>
-                                    <div>
-                                        <p>Salt:</p>
-                                        <p id='salt'>${productInfo.nutriments.salt} g</p>
-                                    </div>
-                                </section>
-                            </aside>
-                        </div>
-                            
-                        <button class="list-delete" data-value="${productInfo.id}">Delete</button>
-                    </li> `;
+                                <div>
+                                    <p>Carbs:</p>
+                                    <p id='carb'>${productInfo.nutriments.carbohydrates} g</p>
+                                </div>
+                                <div>
+                                    <p>Sugar:</p>
+                                    <p id='sugar'>${productInfo.nutriments.sugars} g</p>
+                                </div>
+                                <div>
+                                    <p>Salt:</p>
+                                    <p id='salt'>${productInfo.nutriments.salt} g</p>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                        
+                    <button class="list-delete" data-value="${productInfo.id}">Delete</button>
+                </li> `;
 
             listItem = new DOMParser().parseFromString(xmlString, "text/xml");
         }
@@ -104,8 +100,9 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
                 deleteButton.addEventListener("click", (e) => {
                     let listItem = e.target.closest("li");
 
-                    // Web API
+                    // Web API animation
                     listItem.animate(listItemScaling, listItemTiming);
+                    
                     setTimeout(() => {
                         DeleteProduct(Number(e.target.getAttribute('data-value')), listItem)
                     }, 900);
@@ -138,7 +135,7 @@ function GetGroceriesList() {
     if (filterToggle.checked == false  || linkParts.length < 3)  SetProductAmount(listProductsAmount);
 
     groceriesList.forEach(item => {
-        FetchGroceriesList(item);
+        GetProductData(item, "listItem");
     });          
 }
 
