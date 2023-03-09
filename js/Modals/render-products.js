@@ -27,10 +27,13 @@ let totalSugars = 0,
     listProductsAmount = 0;
 
  function DataIsLoading(loading) {
-    if (loading) {
+    console.log(loading)
+     if (loading) {
+        console.log("appel");
         dataIsLoading = true;
         popUp.loading.classList.add("open");
     } else {
+        console.log("banaan");
         dataIsLoading = false;
         popUp.loading.classList.remove("open");
     }
@@ -39,7 +42,6 @@ let totalSugars = 0,
 function RenderGroceriesListProduct (productInfo, productAmount) {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
     let listItem;
-    checkForLoadedData(groceriesList);
 
     if (!dataIsLoading) {
         popUp.loading.classList.remove("open");

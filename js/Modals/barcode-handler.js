@@ -37,7 +37,7 @@ function StartCameraScan (type) {
         // let number = 2622213062385;
         //     CreateBarcodeImage(number)
         // action sap
-        // let barcode = 8718858613977;
+        let barcode = 8718858613977;
 
         // vitamine water
         // let barcode = 8715600243949;
@@ -48,12 +48,12 @@ function StartCameraScan (type) {
         // Energy
         // let barcode = 8710624030667;
 
-        // const hash = window.location.hash; // Get the hash from the URL
-        // const linkParts = hash.split('/'); // Split the hash into an array of parts
-        // window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+        const hash = window.location.hash; // Get the hash from the URL
+        const linkParts = hash.split('/'); // Split the hash into an array of parts
+        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
 
 
-        DisplayErrorPopUp(err);
+        // DisplayErrorPopUp(err);
     });
 }
 

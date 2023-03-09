@@ -11,6 +11,7 @@ function GetFetchLink (type, barcode) {
     }
 }
 
+const fetchArray = [];
 // Fetch Product Data
 function GetProductData(barcode, dataType) {
     DataIsLoading(true);
@@ -36,6 +37,12 @@ function GetProductData(barcode, dataType) {
             case "listItem":
 
                 // Groceries List
+                // const obj = { 
+                //     product: data.product,
+                //     amount: barcode.productAmount 
+                // };
+                // fetchArray.push(obj);
+                // AwaitFetchData(fetchArray)
                 RenderGroceriesListProduct(data.product, barcode.productAmount);
                 break; 
 
@@ -44,7 +51,17 @@ function GetProductData(barcode, dataType) {
         }
     }))
     .catch((err) => { console.log(err) })
-    .finally(DataIsLoading(false));
+    .finally(
+         setTimeout(() => {DataIsLoading(false)}, 5000)
+        );
+}
+
+async function AwaitFetchData(list) {
+    console.log(await list)
+    // await list.forEach(item => {
+    //     DataIsLoading(false);
+    //     RenderGroceriesListProduct(item.product, item.amount);
+    // });
 }
 
 export { GetProductData };
