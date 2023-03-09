@@ -1,25 +1,18 @@
 import {scan, popUp} from './variable.js';
 import {CreateBarcodeImage} from '../API/create-card.js';
 
-const camera = {
-     scanner: new Html5Qrcode("scanner"),
-     frame: document.getElementById("camera")
-}
-
-let camIsLoading = true;
+const scanner= new Html5Qrcode("scanner");
 
 const fileCodeReader = new Html5Qrcode("reader");
 const errorText = document.getElementById("error-text");
 
 // Start scanning of the camera for product
 function StartCameraScan (type) {
-    CheckLoadingState();
-    camera.frame.classList.remove("hidden");
 
     // Set delay on appearance of stopscan button
     setTimeout(function() {scan.stop.style.display = "block";}, 1400);
 
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = { fps: 10, qrbox: 200 };
     const qrCodeSuccessCallback = (barcode) => {
 
         const hash = window.location.hash; // Get the hash from the URL
@@ -35,10 +28,8 @@ function StartCameraScan (type) {
             CreateBarcodeImage(barcode, false);
         }
     };
-
-    camIsLoading = false;
     
-    camera.scanner
+    scanner
     .start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
     .catch((err) => {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
@@ -46,35 +37,34 @@ function StartCameraScan (type) {
         // let number = 2622213062385;
         //     CreateBarcodeImage(number)
         // action sap
-        let barcode = 8718858613977;
+        // let barcode = 8718858613977;
 
         // vitamine water
+        // let barcode = 8715600243949;
         
         // AA
-        // let barcode = 8715600243949;
         // let barcode = 87365290;
 
         // Energy
         // let barcode = 8710624030667;
 
-        const hash = window.location.hash; // Get the hash from the URL
-        const linkParts = hash.split('/'); // Split the hash into an array of parts
-        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+        // const hash = window.location.hash; // Get the hash from the URL
+        // const linkParts = hash.split('/'); // Split the hash into an array of parts
+        // window.location.hash = `${linkParts[0]}/#product/${barcode}`;
 
 
-        // DisplayErrorPopUp(err);
+        DisplayErrorPopUp(err);
     });
 }
 
 
 // Stops scanning of the camera
 function StopCameraScan() {
-    camera.scanner.stop().then((ignore) => {
-        camera.frame.classList.add("hidden");
+    scanner.stop().then((ignore) => {
         scan.stop.style.display = "none";
         // QR Code scanning is stopped.
         // Clears scanning instance. Stops the camera
-        camera.scanner.clear();
+        scanner.clear();
         
         // Removes reader element from DOM since no longer needed
         // document.getElementById("scanner").remove();
@@ -114,15 +104,7 @@ function GetFileBarcode(event) {
 }
 
 
-function CheckLoadingState() {
-    if (camIsLoading) {
-        console.log("loading");
-    } else console.log(" not loading");
-}
-
-
 function DisplayErrorPopUp(errorMessage) {
-    if (!camera.frame.classList.contains("hidden")) {camera.frame.classList.add("hidden");}
     popUp.error.classList.add("open");
     errorText.textContent = errorMessage;
 }

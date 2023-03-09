@@ -1,5 +1,6 @@
 import {RenderProduct, EditProduct} from '../Modals/render-details.js';
-import {RenderGroceriesListProduct} from '../Modals/render-products.js';
+import {RenderGroceriesListProduct, DataIsLoading} from '../Modals/render-products.js';
+
 
 // Check input and give correct fetch link
 function GetFetchLink (type, barcode) {
@@ -12,6 +13,7 @@ function GetFetchLink (type, barcode) {
 
 // Fetch Product Data
 function GetProductData(barcode, dataType) {
+    DataIsLoading(true);
     let fetchlink = GetFetchLink(typeof(barcode), barcode);
 
     fetchlink
@@ -40,7 +42,9 @@ function GetProductData(barcode, dataType) {
             default:
                 console.log("data type found");
         }
-    })).catch((err) => { console.log(err) });
+    }))
+    .catch((err) => { console.log(err) })
+    .finally(DataIsLoading(false));
 }
 
 export { GetProductData };

@@ -25,12 +25,12 @@ function SetProduct(barcode) {
         productAmount: counter 
     };
 
-    if (counter != 0) {
+    if (counter !== 0) {
         SaveProduct(obj);
         CheckShoppingList(counter);
-
-        counter = 0;
+        
         count.counterIndex.textContent = counter;  
+        counter = 0;
     } else {
         count.counterIndex.classList.add("required");
         console.log("Please give an amount");

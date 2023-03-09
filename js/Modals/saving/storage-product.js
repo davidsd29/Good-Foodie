@@ -4,6 +4,7 @@ import { GetUserID } from './storage-card.js';
 const completePopUp = document.getElementById("complete-pop-up");
 const completePopUTpext = document.querySelector("#complete-pop-up p");
 const listFrame = document.getElementById("list-frame");
+const userID = GetUserID();
 
 function DisplayTaskCompletePopUp(message) {
     completePopUp.classList.add("open");
@@ -14,39 +15,54 @@ function DisplayTaskCompletePopUp(message) {
 
 function SaveProduct(product) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-    if (groceriesList.length === 0) {
-      localStorage.setItem("groceries", JSON.stringify([product]));
-    } else {
+  const products = groceriesList.filter((item) => item.user_id === userID );
+    if (groceriesList.length !== 0) {
+          console.log("appel")
+      
+       if (products.length == 0) {
+            groceriesList.push(product);
+            console.log("banaan")
+            StoreGroceriesList(groceriesList);
+        } else {
+          console.log("citroen")
 
-    // Empty groceriesList before adding new items
-    while (listFrame.lastElementChild) {
-        listFrame.removeChild(listFrame.lastElementChild);
-    }
+      // Empty groceriesList before adding new items
+      while (listFrame.lastElementChild) {
+          listFrame.removeChild(listFrame.lastElementChild);
+      }
 
-      groceriesList.forEach(listItem => {
-        if (product.productCode == listItem.productCode) {
+      products.forEach(listItem => {  
+        console.log(product + " product code")  
+        console.log(listItem.productCode + " listitem code")  
+        if (product.productCode === listItem.productCode) {
+          console.log("druif")
+
           listItem.productAmount = listItem.productAmount + product.productAmount;
         } else {
+          console.log("peer")
           groceriesList.push(product);
         }
       });
 
-      localStorage.setItem("groceries", JSON.stringify(groceriesList));
-
-      DisplayTaskCompletePopUp("Product is saved successfully")
+      StoreGroceriesList(groceriesList);
     }
+  } else {
+      localStorage.setItem("groceries", JSON.stringify([product]));
+      DisplayTaskCompletePopUp("Product is saved successfully");
+
+  }
 }
 
+function StoreGroceriesList(groceriesList) {
+  console.log("mango")
+    localStorage.setItem("groceries", JSON.stringify(groceriesList));
+    DisplayTaskCompletePopUp("Product is saved successfully");
+}
 
 // Remove the product of the user from localstorage
 function DeleteProduct(productCode, listItem) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-  const userID = GetUserID();
 
-  	// const products = groceriesList.filter(
-		// (item) => item.user_id === userID );
-    // console.log(products)
-    
     groceriesList.forEach(item => {
       if ( item.user_id === userID && item.productCode == productCode) {
 
@@ -63,7 +79,7 @@ function DeleteProduct(productCode, listItem) {
   // Remove list HTML Item
   listItem.remove();
 
-    const products = groceriesList.filter((item) => item.user_id === userID );
+  const products = groceriesList.filter((item) => item.user_id === userID );
 
   //   console.log(products)
   //   products.forEach((item) => {
@@ -78,21 +94,23 @@ function DeleteProduct(productCode, listItem) {
 
 
 function DeleteAllProducts() {
-  const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
+  const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");  
+  const products = groceriesList.filter((item) => item.user_id === userID ).map((x) => x);
 
-    for (let i = 0; i <= groceriesList.length; i++) {;
-      // groceriesList.splice(groceriesList.indexOf(i), 1);
-      console.log(groceriesList.length)
-      groceriesList.pop();
+  // Empty groceriesList HTML
+  while (listFrame.children.length > 1) {
+    listFrame.removeChild(listFrame.lastChild);
+  }
 
-      if (groceriesList.length == 0) {
-        // Set the new list back in localstorage
-        localStorage.setItem("groceries", JSON.stringify(groceriesList));
-        DisplayTaskCompletePopUp("Groceries has successfully been deleted");
-        GetGroceriesList();
-      }
+  products.forEach(item => {
+    const productIndex = groceriesList.indexOf(item);
+    groceriesList.splice(productIndex, 1);
 
-    }
+    console.log(groceriesList)
+    localStorage.setItem("groceries", JSON.stringify(groceriesList));
+    DisplayTaskCompletePopUp("Groceries has successfully been deleted");
+    GetGroceriesList();
+  });
 }
 
 

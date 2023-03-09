@@ -111,17 +111,14 @@ footer {
         width: 100%;
 
         li {
+            position: relative;
             display: block;
             padding: 10px;
             min-width: 48px;
             justify-content: center;
             align-items: center;
             text-align: center;
-
-            a {
-                position: relative;
-            }
-
+            
             .fa {
                 font-size: 2em;
             }

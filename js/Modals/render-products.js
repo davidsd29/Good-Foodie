@@ -26,19 +26,24 @@ let totalSugars = 0,
     totalCarb = 0,
     listProductsAmount = 0;
 
-function RenderGroceriesListProduct (productInfo, productAmount) {
-    const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-    let listItem;
-    
-    if (productInfo.product_name === "") { 
+ function DataIsLoading(loading) {
+    if (loading) {
         dataIsLoading = true;
-        setTimeout(function() {popUp.loading.classList.add("open");}, 2000);
+        popUp.loading.classList.add("open");
     } else {
         dataIsLoading = false;
         popUp.loading.classList.remove("open");
     }
+}
+
+function RenderGroceriesListProduct (productInfo, productAmount) {
+    const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
+    let listItem;
+    checkForLoadedData(groceriesList);
 
     if (!dataIsLoading) {
+        popUp.loading.classList.remove("open");
+
         for (let index = 0; index < groceriesList.length; index++) { 
 
             totalSugars =   totalSugars + productInfo.nutriments.sugars;
@@ -120,17 +125,25 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
 
 
 function CheckListAmount(list) {
-    if (list === 0) {
+        console.log("appel")
+
+    if (list == 0) {
+        console.log(list)
         filter.value.textContent = list + " products";
         listFeedback.classList.remove("hidden");
+        console.log("banaan")
     } else listFeedback.classList.add("hidden");
 }
 
 function GetGroceriesList() {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-    CheckListAmount(groceriesList.length);
-
     const userID = GetUserID();
+
+    const list = groceriesList.filter(item => item.user_id === userID).map(x => x);
+    console.log(list)
+    // if (groceriesList.length !== 0)
+    CheckListAmount(list.length);
+
 
     // Get amount of all the products 
     groceriesList.forEach(item => {
@@ -144,7 +157,6 @@ function GetGroceriesList() {
     if (filterToggle.checked == false  || linkParts.length < 3)  SetProductAmount(listProductsAmount);
     
     // Get all the products of the user check on ID number
-    const list = groceriesList.filter(item => item.user_id === userID).map(x => x);
     
     list.forEach(item => {
         GetProductData(item, "listItem");
@@ -163,6 +175,7 @@ export {
     totalSalt,
     totalSugars,
     totalProteins,
+    DataIsLoading,
     CheckListAmount,
     SetProductAmount,
     GetGroceriesList,

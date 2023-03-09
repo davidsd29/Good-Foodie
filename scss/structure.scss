@@ -52,13 +52,21 @@ main {
 	overflow-x: hidden;
 
 	> section:not(#product-detail) {
+		width: 100%;
 		padding: 1em;
-		text-align: center;
-		font-size: 1.5em;
+		margin-bottom: 6.25em;
 		border: 1px solid color(highlight);
 		border-radius: 1.5em;
-		margin-bottom: 6.25em;
+		text-align: center;
+		font-size: 1.5em;
 		transition: 1s;
+
+		&#home {
+			margin-bottom: 1em;
+			img {
+				width: 60%;
+			}
+		}
 
 		&#welcome {
 			display: flex;
@@ -144,6 +152,7 @@ main {
 			}
 
 			> section {
+				width: 100%;
 				&:first-of-type {
 					padding: 1em;
 					border-radius: 1em;
@@ -159,6 +168,7 @@ main {
 						}
 
 						&:first-of-type {
+							width: 100%;
 							align-items: center;
 							padding-left: 0.5em;
 							border-radius: 1em;

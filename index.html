@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link href="css/style.css" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Goodie-Foodie</title>
 </head>
 <body>
@@ -21,8 +21,9 @@
                 <h1>Goodie-Foodie</h1>
             </li>
             <li>
-                <i class="fa fa-user"></i>
-
+                <a href="">
+                    <i class="fa fa-user"></i>
+                </a>
             </li>
         </ul>
     </header>
@@ -36,13 +37,7 @@
         <h2>Sorry...</h2>
         <p id="error-text"></p>
         <img src="img/whoops.png" alt="">
-    </div>
-    
-    <div id="registration-pop-up" class="pop-up">
-        <h1>Registration successful!</h1>
-        <p>Please go ahead and log in.</p>
-        <a href="" class="btn">Log in</a>
-    </div>      
+    </div>    
     
     <div id="loading-pop-up" class="pop-up">
         <h1>Loading...</h1>
@@ -87,10 +82,8 @@
     </div>
 
     <main>
-        <section id="camera" class="hidden">
             <button id="stop-camera-scan" ></button>
             <div id="scanner"></div>
-        </section>
 
         <section id="welcome">
             <img src="img/logo.png" alt="Goodie Foodie logo">
@@ -161,15 +154,11 @@
         </section>
 
         <section id="home">
-        <!-- <section id="home" class="hidden"> -->
-           
             <h2 id="name-title"></h2>
             <div id="reader" width="200px" height="200px"></div>
-            
-
+            <img src="img/shopping.png!bw700" alt="">
         </section>
 
-      <!-- <section id="product-detail"> -->
       <section id="product-detail">
         
         <section class="heading">
@@ -194,6 +183,7 @@
             <li>
                 <article id="ingredients"></article>
             </li>
+
             <li>
                 <h2>Nutrition score</h2>
                 <ul class="nutriscore">
@@ -205,6 +195,7 @@
                 </ul>
                 <p></p>
             </li>
+
             <li>
                 <article>
                     <h2>Product values total</h2>
@@ -239,6 +230,7 @@
                     </div>
                 </article>
             </li>
+
             <li>
                 <article>
                     <h2>Values per 100g</h2>
@@ -275,11 +267,11 @@
                 </article>
             </li>
         </ul>
+
         <!-- nutri score -->
-            <section id="nutrition-score"></section>
-            <section id="product-content"></section>
-            <!-- <section></sec tion> -->
-            <section id="nutritional-values"></section>
+        <section id="nutrition-score"></section>
+        <section id="product-content"></section>
+        <section id="nutritional-values"></section>
 
         </section> 
         

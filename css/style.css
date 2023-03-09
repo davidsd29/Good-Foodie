@@ -109,15 +109,13 @@ footer ul {
   width: 100%;
 }
 footer ul li {
+  position: relative;
   display: block;
   padding: 10px;
   min-width: 48px;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-footer ul li a {
-  position: relative;
 }
 footer ul li .fa {
   font-size: 2em;
@@ -537,13 +535,20 @@ main {
   overflow-x: hidden;
 }
 main > section:not(#product-detail) {
+  width: 100%;
   padding: 1em;
-  text-align: center;
-  font-size: 1.5em;
+  margin-bottom: 6.25em;
   border: 1px solid #ccc;
   border-radius: 1.5em;
-  margin-bottom: 6.25em;
+  text-align: center;
+  font-size: 1.5em;
   transition: 1s;
+}
+main > section:not(#product-detail)#home {
+  margin-bottom: 1em;
+}
+main > section:not(#product-detail)#home img {
+  width: 60%;
 }
 main > section:not(#product-detail)#welcome {
   display: flex;
@@ -612,6 +617,9 @@ main > section:not(#product-detail)#shopping-card h2 {
   font-size: 1.2em;
   margin-bottom: 2em;
 }
+main > section:not(#product-detail)#shopping-card > section {
+  width: 100%;
+}
 main > section:not(#product-detail)#shopping-card > section:first-of-type {
   padding: 1em;
   border-radius: 1em;
@@ -626,6 +634,7 @@ main > section:not(#product-detail)#shopping-card > section:first-of-type div im
   transform: rotate(-22deg) translateY(1.2em);
 }
 main > section:not(#product-detail)#shopping-card > section:first-of-type div:first-of-type {
+  width: 100%;
   align-items: center;
   padding-left: 0.5em;
   border-radius: 1em;
