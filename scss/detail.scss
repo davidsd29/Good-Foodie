@@ -87,10 +87,11 @@ body:has(div.open) main {
     }
 
     p {
+        font-size: 1.5em;
         margin-bottom: 1em;
         transition: 1s;
         @include respond-to(from-md) {
-            font-size: 1.5em;
+            font-size: 2em;
         }
     }
 
@@ -103,11 +104,19 @@ body:has(div.open) main {
         p {
             font-style: italic;
         }
+        img {
+            width: 5em;
+        }
     }
 
     &#error-pop-up {
-        p, h2{
+        h2 {
+            font-size: 3em;
             margin-bottom: .5em;
+        }
+
+        img {
+            width: 7em;
         }
     }     
     

@@ -1,6 +1,7 @@
-import {filter, popUp} from './variable.js';
 import { GetProductData} from '../API/fetch-product.js';
-import { DeleteProduct} from './saving/store-product.js';
+import {filter, popUp} from './variable.js';
+import { DeleteProduct} from './saving/storage-product.js';
+import { GetUserID} from './saving/storage-card.js';
 
 const filterToggle = document.querySelector("input[name='open-filter']");
 const filterSumbit = document.getElementById("filter-submit");
@@ -29,7 +30,7 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
     let listItem;
     
-    if (listFrame.childElementCount === 0 && groceriesList.length > 0) { 
+    if (productInfo.product_name === "") { 
         dataIsLoading = true;
         setTimeout(function() {popUp.loading.classList.add("open");}, 2000);
     } else {
@@ -93,9 +94,14 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
         listFrame.appendChild(listItem.documentElement);
 
         // Of By One Error. childElementCount startes with 0. legnth starts with 1
-        if (listFrame.childElementCount === groceriesList.length +1) {
-            const itemButtons = listFrame.querySelectorAll("button");
+        let listChilderenCount = listFrame.childElementCount -1;
+        const userID = GetUserID();
+        
+        // Get The amount of products of the user
+        const UserProductsAmount = groceriesList.filter((x) =>  x.user_id === userID);
             
+        if (listChilderenCount === UserProductsAmount.length ) {
+            const itemButtons = listFrame.querySelectorAll("button");
             itemButtons.forEach((deleteButton) => {
                 deleteButton.addEventListener("click", (e) => {
                     let listItem = e.target.closest("li");
@@ -112,6 +118,7 @@ function RenderGroceriesListProduct (productInfo, productAmount) {
     }
 }
 
+
 function CheckListAmount(list) {
     if (list === 0) {
         filter.value.textContent = list + " products";
@@ -123,9 +130,11 @@ function GetGroceriesList() {
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
     CheckListAmount(groceriesList.length);
 
+    const userID = GetUserID();
+
     // Get amount of all the products 
     groceriesList.forEach(item => {
-        listProductsAmount = listProductsAmount + item.productAmount;
+        if (item.user_id === userID) listProductsAmount = listProductsAmount + item.productAmount;
     }); 
 
     const hash = window.location.hash; // Get the hash from the URL
@@ -133,8 +142,11 @@ function GetGroceriesList() {
 
     // Check if filtertoggle is not active or if there is no filter in url
     if (filterToggle.checked == false  || linkParts.length < 3)  SetProductAmount(listProductsAmount);
-
-    groceriesList.forEach(item => {
+    
+    // Get all the products of the user check on ID number
+    const list = groceriesList.filter(item => item.user_id === userID).map(x => x);
+    
+    list.forEach(item => {
         GetProductData(item, "listItem");
     });          
 }
@@ -152,6 +164,7 @@ export {
     totalSugars,
     totalProteins,
     CheckListAmount,
+    SetProductAmount,
     GetGroceriesList,
     RenderGroceriesListProduct, 
 }

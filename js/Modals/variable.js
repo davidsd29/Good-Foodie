@@ -21,9 +21,14 @@ const scan = {
 
 const shoppingCard = {
   frame: document.getElementById("shopping-card"),
-  button: document.querySelector("#shopping-card button"),
-  invite: document.querySelector("#shopping-card >section:first-of-type"),
-  card: document.querySelector("#shopping-card >section:last-of-type")
+  notNowBtn: document.querySelector("#shopping-card section:first-of-type button"),
+  invite: document.querySelector("#shopping-card section:first-of-type"),
+  card: document.querySelector("#shopping-card section:nth-of-type(2)"),
+  saveSection: document.querySelector("#shopping-card section:nth-of-type(3)"),
+  saveBtn: document.querySelector("#shopping-card section:nth-of-type(3) button:first-of-type"),
+  saveLaterBtn: document.querySelector("#shopping-card section:nth-of-type(3) button:last-of-type"),
+  deleteSection: document.querySelector("#shopping-card section:last-of-type"),
+  deleteBtn: document.querySelector("#shopping-card section:last-of-type button")
 } 
 
 const popUp = {

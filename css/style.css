@@ -347,12 +347,13 @@ body:has(div.open) main {
   }
 }
 .pop-up p {
+  font-size: 1.5em;
   margin-bottom: 1em;
   transition: 1s;
 }
 @media screen and (min-width: 768px) {
   .pop-up p {
-    font-size: 1.5em;
+    font-size: 2em;
   }
 }
 @media (min-width: 768px) {
@@ -364,8 +365,15 @@ body:has(div.open) main {
 .pop-up#complete-pop-up p {
   font-style: italic;
 }
-.pop-up#error-pop-up p, .pop-up#error-pop-up h2 {
+.pop-up#complete-pop-up img {
+  width: 5em;
+}
+.pop-up#error-pop-up h2 {
+  font-size: 3em;
   margin-bottom: 0.5em;
+}
+.pop-up#error-pop-up img {
+  width: 7em;
 }
 .pop-up#start-pop-up div {
   display: flex;
@@ -644,7 +652,7 @@ main > section:not(#product-detail)#shopping-card > section:first-of-type div p 
   font-weight: bold;
   width: 8em;
 }
-main > section:not(#product-detail)#shopping-card > section:last-of-type {
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) {
   height: auto;
   max-width: 13em;
   padding: 0.5em;
@@ -652,20 +660,41 @@ main > section:not(#product-detail)#shopping-card > section:last-of-type {
   border-radius: 1em;
   border: 2px solid #ccc;
 }
-main > section:not(#product-detail)#shopping-card > section:last-of-type p {
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) p {
   margin-top: 1em;
   color: #FFFFFF;
   font-style: italic;
 }
-main > section:not(#product-detail)#shopping-card > section:last-of-type div {
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) div {
   border-radius: 1em;
   background-color: #FFFFFF;
 }
-main > section:not(#product-detail)#shopping-card > section:last-of-type div img {
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) div img {
   width: 90%;
 }
-main > section:not(#product-detail)#shopping-card > section:last-of-type img {
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) img {
   width: 60%;
+  margin-top: 1em;
+}
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(3) {
+  margin-top: 1em;
+  padding: 0 2em;
+  text-align: center;
+}
+main > section:not(#product-detail)#shopping-card > section:nth-of-type(3) div {
+  margin: 1em 0;
+  display: flex;
+  gap: 2em;
+}
+main > section:not(#product-detail)#shopping-card > section:last-of-type {
+  width: 70%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid #ccc;
+}
+main > section:not(#product-detail)#shopping-card > section:last-of-type button {
+  width: 80%;
   margin-top: 1em;
 }
 main > section:not(#product-detail)#camera {

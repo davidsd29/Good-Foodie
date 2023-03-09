@@ -1,16 +1,17 @@
 import {GetRouter} from './Modals/router.js';
 import {StartCameraScan , StopCameraScan, GetFileBarcode} from './Modals/barcode-handler.js';
-import {scan, shoppingCard, popUp} from './Modals/variable.js';
 import {CheckRegister} from './Modals/user/validate-register.js';
 import {CheckLogin} from './Modals/user/login.js';
 import {PostProductData} from './API/post-product.js';
-import {DeleteAllProducts} from './Modals/saving/store-product.js';
+import {DeleteAllProducts} from './Modals/saving/storage-product.js';
+import {SaveShoppingCard, DeleteShoppingCard} from './Modals/saving/storage-card.js';
+import {scan, shoppingCard, popUp} from './Modals/variable.js';
 
 const fileInput = document.getElementById("qr-input-file");
 const editBtn = document.getElementById("edit-product-btn");
 const welcomeBtn = document.querySelector("#welcome button");
 const checkOutBtn = document.querySelector("#shopping-list button:last-of-type");
-// const listFrame = document.getElementById("list-frame");
+const shoppingCardButtons = document.querySelectorAll("#shopping-card a");
 
 const form = {
     edit: document.getElementById("edit-product-form"),
@@ -22,37 +23,18 @@ const form = {
 const welcomeButtons = document.querySelectorAll("#start-pop-up a");
 
 function GetCodeFromUrl() {
-    const hash = window.location.hash; // Get the hash from the URL
-    const linkParts = hash.split('/'); // Split the hash into an array of parts
-
-    if (linkParts.length > 1) {
-        const code = linkParts[1]; // Get the ID from the hash
-        return code;
-    }
+    //  Get the hash from the URL and Split the hash into an array of parts
+    const linkParts = window.location.hash.split('/'); 
+    return linkParts;
 }
 
+checkOutBtn.addEventListener("click", DeleteAllProducts);
 
-
-// if (listFrame.childElementCount !== 0) {
-//     const listButtons = document.querySelectoAll(".list-delete");
-
-//     listButtons.forEach((deleteButton) => {
-//         deleteButton.addEventListener("click", () => {
-//           DeleteProduct(deleteButton.value)
-//         })
-//     });
-// }
-
-checkOutBtn.addEventListener("click", () => {
-
-    DeleteAllProducts();
-});
 form.filter.addEventListener("input", (e) => {
     e.preventDefault();
-    const hash = window.location.hash; // Get the hash from the URL
-    const linkParts = hash.split('/'); // Split the hash into an array of parts
+    const userInfo = GetCodeFromUrl();
 
-    window.location.hash = `${linkParts[0]}/#shopping-list/filter= ${e.target.value}`;
+    window.location.hash = `${userInfo[0]}/#shopping-list/filter= ${e.target.value}`;
 });
 
 form.edit.addEventListener("sumbit", (e) => {
@@ -69,8 +51,20 @@ form.login.addEventListener("click", (e) => {
     CheckLogin(e);
 });
 
+editBtn.addEventListener("click", () => {
+    const barcode = GetCodeFromUrl();
+    window.location.hash = `#edit-product/${barcode}`;   
+});
+
+
 welcomeBtn.addEventListener("click", () => {
     popUp.start.classList.add("open");
+});
+
+welcomeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        popUp.start.classList.remove("open");
+    })
 });
 
 popUp.closeBtn.forEach((button) => {
@@ -80,24 +74,29 @@ popUp.closeBtn.forEach((button) => {
     })
 });
 
-welcomeButtons.forEach((button) => {
+
+shoppingCardButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        popUp.start.classList.remove("open");
+        StartCameraScan(shoppingCard)
     })
 });
 
-editBtn.addEventListener("click", () => {
-    const barcode = GetCodeFromUrl();
-    window.location.hash = `#edit-product/${barcode}`;   
+shoppingCard.saveBtn.addEventListener("click", (e) => {
+    SaveShoppingCard(Number(e.target.getAttribute('data-value')));
 });
 
-shoppingCard.button.addEventListener("click", () => {
-        const hash = window.location.hash; // Get the hash from the URL
-        const linkParts = hash.split('/'); // Split the hash into an array of parts
+shoppingCard.deleteBtn.addEventListener("click", (e) => {
+    DeleteShoppingCard(Number(e.target.getAttribute('data-value')));
+});
+
+shoppingCard.notNowBtn.addEventListener("click", () => {
+    const linkParts = GetCodeFromUrl();
+
     if (linkParts[1] === "#shopping-card") {
         window.location.hash = `${linkParts[0]}/#home`;
     } else shoppingCard.frame.classList.add("hidden");
 });
+
 
 scan.stop.addEventListener("click", StopCameraScan);
 scan.start.addEventListener("click", () => {
@@ -109,7 +108,7 @@ scan.popup.addEventListener("click", () => {
     popUp.scan.classList.add("open")
 }); 
 
-fileInput.addEventListener("change", e => { GetFileBarcode(e); });
+fileInput.addEventListener("change", (e) => { GetFileBarcode(e); });
 
 window.addEventListener("load", GetRouter);
 window.addEventListener("hashchange", () => {

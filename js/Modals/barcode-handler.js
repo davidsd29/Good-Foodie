@@ -1,4 +1,5 @@
 import {scan, popUp} from './variable.js';
+import {CreateBarcodeImage} from '../API/create-card.js';
 
 const camera = {
      scanner: new Html5Qrcode("scanner"),
@@ -30,7 +31,8 @@ function StartCameraScan (type) {
         if( type === "product"){
             window.location.hash = `${linkParts[0]}/#product/${barcode}`;
         } else {
-            window.location.hash = `${linkParts[0]}/#shopping-card/${barcode}`;
+            //  Shopping card
+            CreateBarcodeImage(barcode, false);
         }
     };
 
@@ -41,13 +43,15 @@ function StartCameraScan (type) {
     .catch((err) => {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
 
+        // let number = 2622213062385;
+        //     CreateBarcodeImage(number)
         // action sap
-        // let barcode = 8718858613977;
+        let barcode = 8718858613977;
 
         // vitamine water
-        let barcode = 8715600243949;
-
+        
         // AA
+        // let barcode = 8715600243949;
         // let barcode = 87365290;
 
         // Energy

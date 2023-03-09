@@ -4,7 +4,6 @@ import {totalSugars, totalSalt, totalCarb, totalProteins} from './render-product
 function FilterProduct(filterlink) {
 
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-    console.log(filterlink);
     const linkParts = filterlink.split('0'); // Split the hash into an array of parts
     // let linkParts;
 
@@ -12,7 +11,7 @@ function FilterProduct(filterlink) {
         const filterName = linkParts[1]; // Get the ID from the hash
         filter.title.textContent = filterName;
 
-        switch (filterName) { // Check which part of the hash we're dealing with
+        switch (filterName) { // Check which filter we're dealing with
             case "sugar":
                 filter.value.textContent = Math.round(totalSugars) + " g"  
             break; 

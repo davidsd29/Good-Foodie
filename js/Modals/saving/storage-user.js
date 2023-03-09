@@ -1,4 +1,4 @@
-import {DisplayTaskCompletePopUp} from './store-product.js';
+import {DisplayTaskCompletePopUp} from './storage-product.js';
 import {popUp} from '../variable.js';
 
 function SaveUser(user) {
@@ -10,6 +10,9 @@ function SaveUser(user) {
       localStorage.setItem("users", JSON.stringify([user]));
     } else {
         users.push(user);
+        console.log(user)
+        localStorage.setItem("users", JSON.stringify(users));
+
     }
 
     DisplayTaskCompletePopUp("Your acount has been made. You will be automatically redirected to the log in screen");

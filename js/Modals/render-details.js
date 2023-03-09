@@ -1,15 +1,12 @@
 import {SetProduct} from './set-list.js';
 import {editForm, popUp} from './variable.js';
 
-let dataIsLoading = false;
+let dataIsLoading = true;
 
 const product = {
     img: document.querySelector(".heading img"),
     name: document.querySelector(".heading h1"),
-    addButton: document.querySelector(".heading button"),
-    nutrition: document.querySelector("nutrition-score"),
-    productContent: document.querySelector("product-content"),
-    nutritionalValues: document.querySelector("nutritional-values"),
+    ingredients: document.getElementById("ingredients"),
 }
 
 const productValues = {
@@ -36,6 +33,7 @@ const nutrition = {
   c: document.getElementById("nutriscore-C"),
   d: document.getElementById("nutriscore-D"),
   e: document.getElementById("nutriscore-E"),
+  text: document.querySelector(".nutriscore + p"),
 }
 
 const addButton = document.getElementById("add-item");
@@ -43,18 +41,19 @@ const addButton = document.getElementById("add-item");
 // Render prodcut and updating the UI
 function RenderProduct(productInfo, barcode) {
 
-    if ( product.img.src === "") { 
+    product.img.setAttribute("src", `${productInfo.image_url}`);
+
+    if (product.img.hasAttributeNS(" ","src")) { 
         dataIsLoading = true;
-        setTimeout(function() {popUp.loading.classList.add("open");}, 2000);
+        popUp.loading.classList.add("open");
     } else {
-        dataIsLoading = false;
-        popUp.loading.classList.remove("open");
-    }
+            dataIsLoading = false;
+            popUp.loading.classList.remove("open");
+        }
+
 
     if (!dataIsLoading) {
-
         product.name.textContent = `${productInfo.product_name}`;
-        product.img.setAttribute("src", `${productInfo.image_url}`);
         product.img.setAttribute("alt", `${productInfo.product_name}`);
 
         if (productInfo.nutriscore_grade !== 'undefined') GetNutrionGrade(productInfo);
@@ -63,16 +62,11 @@ function RenderProduct(productInfo, barcode) {
         addButton.addEventListener("click",() => {
         SetProduct(barcode)
         });
-
     }
 }
 
-function EditProduct(product, barcode) {
-
-    console.log(product.product_name);
-    // form.name.setAttribute("value", `${product.product_name}`);
+function EditProduct(product) {
     editForm.name.value = product.product_name;
-
     editForm.savedImg.setAttribute("src", `${product.image_url}`);
     editForm.sugar.value = product.nutriments.sugars;
     editForm.salt.value = product.nutriments.salt;
@@ -80,19 +74,20 @@ function EditProduct(product, barcode) {
 }
 
 function SetProductValues(productInfo) {
-    productValues.carb.textContent = productInfo.nutriments.carbohydrates + " g";
-    productValues.energy.textContent = productInfo.nutriments.energy + " g";
-    productValues.fat.textContent = productInfo.nutriments.fat + " g";
-    // productValues.sFat.textContent = productInfo.nutriments.saturated-fat_100g;
-    productValues.proteins.textContent = productInfo.nutriments.proteins + " g";
-    productValues.sugar.textContent = productInfo.nutriments.sugars + " g";
+    product.ingredients.textContent =           productInfo.ingredients_text;
+    productValues.carb.textContent =            productInfo.nutriments.carbohydrates + " g";
+    productValues.energy.textContent =          productInfo.nutriments.energy + " g";
+    productValues.fat.textContent =             productInfo.nutriments.fat + " g";
+    // productValues.sFat.textContent =            productInfo.nutriments.saturated-fat_100g;
+    productValues.proteins.textContent =        productInfo.nutriments.proteins + " g";
+    productValues.sugar.textContent =           productInfo.nutriments.sugars + " g";
     
-    productValues100g.carb.textContent = productInfo.nutriments.carbohydrates_100g + " g";
-    productValues100g.energy.textContent = productInfo.nutriments.energy_100g + " g";
-    productValues100g.fat.textContent = productInfo.nutriments.fat_100g + " g";
-    // productValues100g.sFat.textContent = productInfo.nutriments.saturated-fat_100g;
-    productValues100g.proteins.textContent = productInfo.nutriments.proteins_100g + " g";
-    productValues100g.sugar.textContent = productInfo.nutriments.sugars_100g + " g";
+    productValues100g.carb.textContent =        productInfo.nutriments.carbohydrates_100g + " g";
+    productValues100g.energy.textContent =      productInfo.nutriments.energy_100g + " g";
+    productValues100g.fat.textContent =         productInfo.nutriments.fat_100g + " g";
+    // productValues100g.sFat.textContent =        productInfo.nutriments.saturated-fat_100g;
+    productValues100g.proteins.textContent =    productInfo.nutriments.proteins_100g + " g";
+    productValues100g.sugar.textContent =       productInfo.nutriments.sugars_100g + " g";
 }
 
 function GetNutrionGrade (productInfo) {
@@ -115,6 +110,7 @@ function GetNutrionGrade (productInfo) {
         break;       
 
         default:
+            nutrition.text.textContent = "There is no known nutrition grade";
             console.log("no grade given")
     }
 }

@@ -28,7 +28,7 @@ function GetProductData(barcode, dataType) {
             case "edit":
 
                 // Edit product
-                EditProduct(data.product, barcode);
+                EditProduct(data.product);
                 break;  
 
             case "listItem":

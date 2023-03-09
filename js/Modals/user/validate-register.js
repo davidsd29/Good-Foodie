@@ -1,4 +1,4 @@
-import {SaveUser} from '../saving/store-user.js';
+import {SaveUser} from '../saving/storage-user.js';
 
 const registerForm = {
     formFields: document.querySelectorAll(".form-field"),

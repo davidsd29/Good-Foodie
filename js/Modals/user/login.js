@@ -1,5 +1,3 @@
-import { GetRouter } from "../router.js";
-
 const login = {
     email: document.getElementById("login-email"),
     psw: document.getElementById("login-psw"),
@@ -17,7 +15,6 @@ const shoppingCradAccept = document.querySelector("#shopping-card a")
 function SetNavigation (id, name) {
     navigation.home.setAttribute("href", `#id=${id}&${name}/#home`);
     navigation.card.setAttribute("href", `#id=${id}&${name}/#shopping-card`);
-    navigation.list.setAttribute("href", `#id=${id}&${name}/#shopping-list`);
     navigation.list.setAttribute("href", `#id=${id}&${name}/#shopping-list`);
     shoppingCradAccept.setAttribute("href", `#id=${id}&${name}/#shopping-card`);
 }
@@ -42,7 +39,11 @@ function CheckLogin(event) {
 
             } else if (login.email.value === user.email && login.psw.value !== user.pws) {
                 console.log("wrong email or passwoord. please try again")
-            }           
+            } else if (login.email.value !== user.email) {
+                console.log("wrong email or passwoord. please try again")
+            }  else {
+                console.log("Please make an account");
+            }         
         });
     }
 }

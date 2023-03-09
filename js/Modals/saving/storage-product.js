@@ -1,5 +1,5 @@
-import {GetGroceriesList, CheckListAmount} from '../render-products.js';
-import {shoppingCard} from '../variable.js';
+import {GetGroceriesList, CheckListAmount, SetProductAmount} from '../render-products.js';
+import { GetUserID } from './storage-card.js';
 
 const completePopUp = document.getElementById("complete-pop-up");
 const completePopUTpext = document.querySelector("#complete-pop-up p");
@@ -14,8 +14,7 @@ function DisplayTaskCompletePopUp(message) {
 
 function SaveProduct(product) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-    if (groceriesList.length == 0) {
-      console.log("no products in de list");
+    if (groceriesList.length === 0) {
       localStorage.setItem("groceries", JSON.stringify([product]));
     } else {
 
@@ -25,7 +24,7 @@ function SaveProduct(product) {
     }
 
       groceriesList.forEach(listItem => {
-        if (product.productCode === listItem.productCode) {
+        if (product.productCode == listItem.productCode) {
           listItem.productAmount = listItem.productAmount + product.productAmount;
         } else {
           groceriesList.push(product);
@@ -39,23 +38,42 @@ function SaveProduct(product) {
 }
 
 
-// Remove the story from localstorage
-function DeleteProduct(product, listItem) {
+// Remove the product of the user from localstorage
+function DeleteProduct(productCode, listItem) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-  
-  // Get index of the product
-  const productIndex = groceriesList.indexOf(product);
-  groceriesList.splice(productIndex, 1);
-  
-  // Set the new list back in localstorage
+  const userID = GetUserID();
+
+  	// const products = groceriesList.filter(
+		// (item) => item.user_id === userID );
+    // console.log(products)
+    
+    groceriesList.forEach(item => {
+      if ( item.user_id === userID && item.productCode == productCode) {
+
+        // Get index of the product
+        const productIndex = groceriesList.indexOf(item);
+        groceriesList.splice(productIndex, 1);
+      }
+    });
+
+  // // Set the new list back in localstorage
   localStorage.setItem("groceries", JSON.stringify(groceriesList));
   DisplayTaskCompletePopUp("Product has successfully been deleted");
 
   // Remove list HTML Item
   listItem.remove();
-  CheckListAmount(groceriesList.length);
 
+    const products = groceriesList.filter((item) => item.user_id === userID );
 
+  //   console.log(products)
+  //   products.forEach((item) => {
+  //     let totalAmount = 0;
+  //     totalAmount = totalAmount + item.productAmount;
+
+  //     console.log(totalAmount)
+  //  })
+    // SetProductAmount(amount)
+    CheckListAmount(products.length);
 }
 
 
@@ -78,39 +96,9 @@ function DeleteAllProducts() {
 }
 
 
-function SaveShoppingCard(barcode) {
-  const shoppingCardBarcode = JSON.parse(localStorage.getItem("shoppingCard") || "[]");
-
-  if (shoppingCardBarcode.length == 0) {
-    console.log("no card in saved");
-    localStorage.setItem("shoppingCardBarcode", JSON.stringify(barcode));
-    DisplayTaskCompletePopUp("Shopping card is saved successfully")
-  } else {
-      shoppingCard.card.classList.remove("hidden");
-      shoppingCard.invite.classList.add("hidden");
-  }
-}
-
-
-function DeleteShoppingCard(barcode) {
-  const cardBarcode = JSON.parse(localStorage.getItem("shoppingCard") || "[]");
-
-  const cardIndex = cardBarcode.indexOf(barcode);
-  cardBarcode.splice(cardIndex, 1);
-
-  // Set the new list back in localstorage
-  localStorage.setItem("shoppingCard", JSON.stringify(cardBarcode));
-  DisplayTaskCompletePopUp("Shopping Card has successfully been deleted")
-  shoppingCard.card.classList.add("hidden");
-  shoppingCard.invite.classList.remove("hidden");
-}
-
-
 export { 
   SaveProduct, 
   DeleteProduct, 
-  SaveShoppingCard,
   DeleteAllProducts, 
-  DeleteShoppingCard,
   DisplayTaskCompletePopUp 
-};
+}

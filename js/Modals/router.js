@@ -1,9 +1,9 @@
 import {GetProductData} from '../API/fetch-product.js';
+import {CreateBarcodeImage} from '../API/create-card.js';
 import {FilterProduct} from './filter-products.js';
 import {GetGroceriesList} from './render-products.js';
-import {StartCameraScan} from './barcode-handler.js';
-import {CreateBarcodeImage} from '../API/create-card.js';
 import {shoppingCard} from './variable.js';
+import {GetUserID} from './saving/storage-card.js';
 
 const page = {
     welcome: document.getElementById("welcome"),
@@ -31,14 +31,23 @@ function DisplayTaskCompletePopUp(message) {
 }
 
 function CheckCardExist() {
-    const shoppingCardBarcode = JSON.parse(localStorage.getItem("shoppingCard") || "[]");
+	const shoppingCards = JSON.parse(localStorage.getItem('shoppingCards') || '[]');
 
-    if (shoppingCardBarcode.length == 0) {
-        shoppingCard.card.classList.add("hidden");
-    } else {
-        shoppingCard.card.classList.remove("hidden");
-        shoppingCard.invite.classList.add("hidden");
-    }
+    const userID = GetUserID();
+
+	if (shoppingCards.length !== 0) {
+        shoppingCards.forEach(card => {
+            if (card.user_id === userID) {
+                CreateBarcodeImage(card.cardCode, true);
+                shoppingCard.card.classList.remove("hidden");
+                shoppingCard.invite.classList.add("hidden");
+            } else {
+                console.log("User does not have a shopping card");
+                if (!shoppingCard.card.classList.contains("hidden")) shoppingCard.card.classList.add("hidden");
+            }
+        });
+
+	} else console.log('There are not saved cards');
 }
 
 // Hide all pages
@@ -85,7 +94,6 @@ function GetRouter() {
                     FilterProduct(filterLink);
                 }
                 
-                // GetGroceriesListData();
                 GetGroceriesList();
                 HideAllPages();
                 page.shoppingList.classList.remove("hidden");
@@ -103,17 +111,8 @@ function GetRouter() {
             break;         
             
             case "#shopping-card":
-
-                // let number = 2622213062385;
-                if (linkParts.length >= 3 ) {
-                    const barcode = linkParts[2]; // Get the ID from the hash
-                    CreateBarcodeImage(barcode);
-                } else {
-                    StartCameraScan("shopping-card");
-                    // CreateBarcodeImage(number);
-                }
-
-                CheckCardExist();
+            
+                // CheckCardExist();
                 HideAllPages();
                 page.card.classList.remove("hidden");  
             break;  
@@ -163,4 +162,7 @@ function GetRouter() {
     }
 }
 
-export { GetRouter };
+export { 
+    GetRouter,
+    CheckCardExist,
+}

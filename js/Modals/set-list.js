@@ -1,4 +1,4 @@
-import {SaveProduct} from './saving/store-product.js';
+import {SaveProduct} from './saving/storage-product.js';
 
 let counter = 0;
 let shoppingCartAmount = 0;
@@ -15,7 +15,12 @@ count.counterIndex.textContent = counter;
 if (counter < 0) counter = 0;
 
 function SetProduct(barcode) {
+    const userInfo = window.location.hash.split('&'); // Split the hash into an array of parts
+
+    const IDNummer = userInfo[0].split("=");
+
     const obj = { 
+        user_id: IDNummer[1],
         productCode: barcode,
         productAmount: counter 
     };
