@@ -29,9 +29,7 @@ function CheckLogin(event) {
     } else {
         users.forEach(user => {
             if (login.email.value === user.email && login.psw.value === user.psw) {
-                console.log("user exist log in succesful")
                 const userIndex = users.indexOf(user);
-                console.log(userIndex);
                 
                 window.location.hash = `#id=${userIndex}&${user.name}/#home`;
                 nameTitle.textContent = `Welcome ${user.name}`;

@@ -21,7 +21,7 @@ function StartCameraScan (type) {
         StopCameraScan();
         
         // Set data in URL; 
-        if( type === "product"){
+        if( type === "product") {
             window.location.hash = `${linkParts[0]}/#product/${barcode}`;
         } else {
             //  Shopping card
@@ -34,23 +34,26 @@ function StartCameraScan (type) {
     .catch((err) => {
         setTimeout(function() {scan.stop.style.display = "none";}, 1400);
 
-        // let number = 2622213062385;
-        //     CreateBarcodeImage(number)
-        // action sap
-        let barcode = 8718858613977;
+        if( type === "product") {
+            // action sap
+            // let barcode = 8718858613977;
 
-        // vitamine water
-        // let barcode = 8715600243949;
-        
-        // AA
-        // let barcode = 87365290;
+            // vitamine water
+            // let barcode = 8715600243949;
+            
+            // AA
+            // let barcode = 87365290;
 
-        // Energy
-        // let barcode = 8710624030667;
+            // Energy
+            let barcode = 8710624030667;
 
-        const hash = window.location.hash; // Get the hash from the URL
-        const linkParts = hash.split('/'); // Split the hash into an array of parts
-        window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+            const hash = window.location.hash; // Get the hash from the URL
+            const linkParts = hash.split('/'); // Split the hash into an array of parts
+            window.location.hash = `${linkParts[0]}/#product/${barcode}`;
+         } else {
+              let number = 2622213062385;
+            CreateBarcodeImage(number)
+         }
 
 
         // DisplayErrorPopUp(err);

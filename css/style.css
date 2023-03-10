@@ -665,6 +665,8 @@ main > section:not(#product-detail)#shopping-card > section:nth-of-type(2) {
   height: auto;
   max-width: 13em;
   padding: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
   background-color: deepskyblue;
   border-radius: 1em;
   border: 2px solid #ccc;

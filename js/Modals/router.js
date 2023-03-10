@@ -41,10 +41,7 @@ function CheckCardExist() {
                 CreateBarcodeImage(card.cardCode, true);
                 shoppingCard.card.classList.remove("hidden");
                 shoppingCard.invite.classList.add("hidden");
-            } else {
-                console.log("User does not have a shopping card");
-                if (!shoppingCard.card.classList.contains("hidden")) shoppingCard.card.classList.add("hidden");
-            }
+            } 
         });
 
 	} else console.log('There are not saved cards');
@@ -92,9 +89,9 @@ function GetRouter() {
                 if (linkParts.length >= 3) {
                     const filterLink = linkParts[2]; // Get the filter from the hash
                     FilterProduct(filterLink);
-                }
+                } else GetGroceriesList(false);
                 
-                GetGroceriesList();
+                
                 HideAllPages();
                 page.shoppingList.classList.remove("hidden");
                 listFilter.classList.remove("hidden");

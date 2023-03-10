@@ -15,9 +15,11 @@ function DisplayTaskCompletePopUp(message) {
 
 function SaveProduct(product) {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
-  const products = groceriesList.filter((item) => item.user_id === userID );
+  const products = groceriesList.filter((item) => item.user_id === userID ).map(x => x);
     if (groceriesList.length !== 0) {
-          console.log("appel")
+      console.log(products)
+      console.log(products.length)
+      console.log("appel")
       
        if (products.length == 0) {
             groceriesList.push(product);
@@ -32,10 +34,9 @@ function SaveProduct(product) {
       }
 
       products.forEach(listItem => {  
-        console.log(product + " product code")  
-        console.log(listItem.productCode + " listitem code")  
         if (product.productCode === listItem.productCode) {
           console.log("druif")
+          console.log(listItem)
 
           listItem.productAmount = listItem.productAmount + product.productAmount;
         } else {
@@ -58,6 +59,7 @@ function StoreGroceriesList(groceriesList) {
     localStorage.setItem("groceries", JSON.stringify(groceriesList));
     DisplayTaskCompletePopUp("Product is saved successfully");
 }
+
 
 // Remove the product of the user from localstorage
 function DeleteProduct(productCode, listItem) {
@@ -95,7 +97,7 @@ function DeleteProduct(productCode, listItem) {
 
 function DeleteAllProducts() {
   const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");  
-  const products = groceriesList.filter((item) => item.user_id === userID ).map((x) => x);
+  const products = groceriesList.filter((item) => item.user_id === userID).map((x) => x);
 
   // Empty groceriesList HTML
   while (listFrame.children.length > 1) {
@@ -109,7 +111,7 @@ function DeleteAllProducts() {
     console.log(groceriesList)
     localStorage.setItem("groceries", JSON.stringify(groceriesList));
     DisplayTaskCompletePopUp("Groceries has successfully been deleted");
-    GetGroceriesList();
+    GetGroceriesList(true);
   });
 }
 

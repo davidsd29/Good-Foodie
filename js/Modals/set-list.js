@@ -12,7 +12,6 @@ const count = {
 
 count.counterIndex.textContent = counter;
 
-if (counter < 0) counter = 0;
 
 function SetProduct(barcode) {
     const userInfo = window.location.hash.split('&'); // Split the hash into an array of parts
@@ -55,5 +54,6 @@ count.increaseBtn.addEventListener("click", () => {
 
 count.decreaseBtn.addEventListener("click", () => {
     counter--;
+    if (counter < 0) counter = 0;
     count.counterIndex.textContent = counter;
 });

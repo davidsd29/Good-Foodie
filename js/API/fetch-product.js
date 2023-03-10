@@ -1,67 +1,90 @@
-import {RenderProduct, EditProduct} from '../Modals/render-details.js';
-import {RenderGroceriesListProduct, DataIsLoading} from '../Modals/render-products.js';
-
+import { RenderProduct, EditProduct } from '../Modals/render-details.js';
+import {
+	RenderGroceriesListProduct,
+	DataIsLoading,
+} from '../Modals/render-products.js';
+import { GetUserID } from '../Modals/saving/storage-card.js';
 
 // Check input and give correct fetch link
-function GetFetchLink (type, barcode) {
-    if (type === "string"){
-        return fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
-    } else {
-        return fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode.productCode}.json`);   
-    }
+function GetFetchLink(type, barcode) {
+	if (type === 'string') {
+		return fetch(
+			`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`
+		);
+	} else {
+		return fetch(
+			`https://world.openfoodfacts.org/api/v0/product/${barcode.productCode}.json`
+		);
+	}
 }
 
-const fetchArray = [];
+// Fetching data
+async function FetchData(url) {
+	try {
+		const response = await url;
+		if (!response.ok) {
+			throw new Error('This product is not available');
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 // Fetch Product Data
-function GetProductData(barcode, dataType) {
-    DataIsLoading(true);
-    let fetchlink = GetFetchLink(typeof(barcode), barcode);
+async function GetProductData(barcode, dataType) {
+	DataIsLoading(true);
+	const fetchArray = [];
+	const data = await FetchData(GetFetchLink(typeof barcode, barcode));
 
-    fetchlink
-    .then((response) => response.json())
-    .then(( data => {
+	switch (dataType) {
+		case 'product':
+			// Product Detail
 
-        switch (dataType) {
-            case "product":
+			RenderProduct(data.product, barcode);
+			DataIsLoading(false);
+			break;
 
-                // Product Detail
-                RenderProduct(data.product, barcode);
-                break; 
+		case 'edit':
+			// Edit product
+			EditProduct(data.product);
+			DataIsLoading(false);
+			break;
 
-            case "edit":
+		case 'listItem':
+			// Groceries List
+			const obj = {
+				product: data.product,
+				productAmount: barcode.productAmount,
+			};
 
-                // Edit product
-                EditProduct(data.product);
-                break;  
+			fetchArray.push(obj);
+			AwaitFetchData(fetchArray);
+			break;
 
-            case "listItem":
-
-                // Groceries List
-                // const obj = { 
-                //     product: data.product,
-                //     amount: barcode.productAmount 
-                // };
-                // fetchArray.push(obj);
-                // AwaitFetchData(fetchArray)
-                RenderGroceriesListProduct(data.product, barcode.productAmount);
-                break; 
-
-            default:
-                console.log("data type found");
-        }
-    }))
-    .catch((err) => { console.log(err) })
-    .finally(
-         setTimeout(() => {DataIsLoading(false)}, 5000)
-        );
+		default:
+			console.log('data type found');
+	}
 }
 
-async function AwaitFetchData(list) {
-    console.log(await list)
-    // await list.forEach(item => {
-    //     DataIsLoading(false);
-    //     RenderGroceriesListProduct(item.product, item.amount);
-    // });
+function AwaitFetchData(fetchArray) {
+	const groceriesList = JSON.parse(localStorage.getItem('groceries') || '[]');
+	const userID = GetUserID();
+	const list = groceriesList
+		.filter((item) => item.user_id === userID)
+		.map((x) => x);
+
+	let fetchArrayLength = fetchArray.length
+
+	if (list.length > 1) fetchArray.length ++;
+	if (list.length === fetchArray.length ) {
+		DataIsLoading(false);
+
+		fetchArray.forEach((list) => {
+			RenderGroceriesListProduct(list.product, list.productAmount);
+		});
+	}
 }
 
 export { GetProductData };
