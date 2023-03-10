@@ -1,7 +1,7 @@
-import {GetProductData} from '../API/fetch-product.js';
+import {ReplanishData} from '../API/fetch-product.js';
 import {CreateBarcodeImage} from '../API/create-card.js';
 import {FilterProduct} from './filter-products.js';
-import {GetGroceriesList} from './render-products.js';
+import {GetGroceriesList} from './rendering/render-products.js';
 import {shoppingCard} from './variable.js';
 import {GetUserID} from './saving/storage-card.js';
 
@@ -32,7 +32,6 @@ function DisplayTaskCompletePopUp(message) {
 
 function CheckCardExist() {
 	const shoppingCards = JSON.parse(localStorage.getItem('shoppingCards') || '[]');
-
     const userID = GetUserID();
 
 	if (shoppingCards.length !== 0) {
@@ -47,6 +46,7 @@ function CheckCardExist() {
 	} else console.log('There are not saved cards');
 }
 
+
 // Hide all pages
 function HideAllPages() {
     if (!page.welcome.classList.contains("hidden"))        page.welcome.classList.add("hidden");
@@ -60,15 +60,18 @@ function HideAllPages() {
     if (!listFilter.classList.contains("hidden"))          listFilter.classList.add("hidden"); 
 }
 
+
 function RemoveNavigation() {
     nav.footer.classList.add("hidden");
     nav.header.classList.add("hidden");
 }
 
+
 function DisplayNavigation() {
     if (nav.footer.classList.contains("hidden"))          nav.footer.classList.remove("hidden");
     if (nav.header.classList.contains("hidden"))          nav.header.classList.remove("hidden");
 }
+
 
 function GetRouter() {
     const hash = window.location.hash; // Get the hash from the URL
@@ -91,7 +94,6 @@ function GetRouter() {
                     FilterProduct(filterLink);
                 } else GetGroceriesList(false);
                 
-                
                 HideAllPages();
                 page.shoppingList.classList.remove("hidden");
                 listFilter.classList.remove("hidden");
@@ -100,7 +102,7 @@ function GetRouter() {
             case "#product":
                 if (linkParts.length >= 3) {
                     const barcode = linkParts[2]; // Get the ID from the hash
-                    GetProductData(barcode, "product");
+                    ReplanishData(barcode, "product");
                 }
 
                 HideAllPages();
@@ -118,7 +120,7 @@ function GetRouter() {
 
                 if (linkParts.length >= 3) {
                     const barcode = linkParts[2]; // Get the ID from the hash
-                    GetProductData(barcode, "edit");
+                    ReplanishData(barcode, "edit");
                 }
 
                 HideAllPages();

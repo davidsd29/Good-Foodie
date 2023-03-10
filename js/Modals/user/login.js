@@ -1,6 +1,9 @@
 const login = {
     email: document.getElementById("login-email"),
     psw: document.getElementById("login-psw"),
+    errorText: document.getElementById("login-error-text"),
+    inputError: document.getElementById("input-error"),
+    registerBtn: document.querySelector("#login-pop-up a")
 }
 
 const navigation = {
@@ -27,6 +30,7 @@ function CheckLogin(event) {
     if (users.length === 0) {
       console.log("Please make an account");
     } else {
+
         users.forEach(user => {
             if (login.email.value === user.email && login.psw.value === user.psw) {
                 const userIndex = users.indexOf(user);
@@ -35,12 +39,11 @@ function CheckLogin(event) {
                 nameTitle.textContent = `Welcome ${user.name}`;
                 SetNavigation(userIndex, user.name)
 
-            } else if (login.email.value === user.email && login.psw.value !== user.pws) {
-                console.log("wrong email or passwoord. please try again")
-            } else if (login.email.value !== user.email) {
-                console.log("wrong email or passwoord. please try again")
-            }  else {
-                console.log("Please make an account");
+            } else if (login.email.value == user.email && login.psw.value !== user.psw) {
+                login.errorText.textContent = "wrong email or passwoord. please try again";
+            } else {
+                login.errorText.textContent = "There is no user with this email. Please make an account by registering.";
+                if(login.registerBtn.classList.contains("hidden")) login.registerBtn.classList.remove("hidden");
             }         
         });
     }

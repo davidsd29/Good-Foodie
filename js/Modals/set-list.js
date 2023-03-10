@@ -12,10 +12,8 @@ const count = {
 
 count.counterIndex.textContent = counter;
 
-
 function SetProduct(barcode) {
     const userInfo = window.location.hash.split('&'); // Split the hash into an array of parts
-
     const IDNummer = userInfo[0].split("=");
 
     const obj = { 
@@ -36,6 +34,7 @@ function SetProduct(barcode) {
     }
 }
 
+
 function CheckShoppingList(productAmount) {
     shoppingCartAmount = shoppingCartAmount + productAmount;
 
@@ -44,7 +43,7 @@ function CheckShoppingList(productAmount) {
         count.shoppingListIndex.textContent = shoppingCartAmount;
     }
 }
-export { SetProduct }
+
 
 count.increaseBtn.addEventListener("click", () => {
     if (count.counterIndex.classList.contains("required")) count.counterIndex.classList.remove("required");
@@ -57,3 +56,5 @@ count.decreaseBtn.addEventListener("click", () => {
     if (counter < 0) counter = 0;
     count.counterIndex.textContent = counter;
 });
+
+export { SetProduct }

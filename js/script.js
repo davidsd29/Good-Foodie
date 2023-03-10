@@ -52,8 +52,8 @@ form.login.addEventListener("click", (e) => {
 });
 
 editBtn.addEventListener("click", () => {
-    const barcode = GetCodeFromUrl();
-    window.location.hash = `#edit-product/${barcode}`;   
+    const linkParts = GetCodeFromUrl();
+    window.location.hash = `${linkParts[0]}/#edit-product/${linkParts[2]}`;   
 });
 
 

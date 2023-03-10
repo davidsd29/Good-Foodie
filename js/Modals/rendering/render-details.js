@@ -1,5 +1,5 @@
-import {SetProduct} from './set-list.js';
-import {editForm, popUp} from './variable.js';
+import {SetProduct} from '../set-list.js';
+import {editForm, popUp} from '../variable.js';
 
 let dataIsLoading = true;
 
@@ -78,14 +78,14 @@ function SetProductValues(productInfo) {
     productValues.carb.textContent =            productInfo.nutriments.carbohydrates + " g";
     productValues.energy.textContent =          productInfo.nutriments.energy + " g";
     productValues.fat.textContent =             productInfo.nutriments.fat + " g";
-    // productValues.sFat.textContent =            productInfo.nutriments.saturated-fat_100g;
+    productValues.sFat.textContent =            productInfo.nutriments["saturated-fat_100g"] + " g";
     productValues.proteins.textContent =        productInfo.nutriments.proteins + " g";
     productValues.sugar.textContent =           productInfo.nutriments.sugars + " g";
     
     productValues100g.carb.textContent =        productInfo.nutriments.carbohydrates_100g + " g";
     productValues100g.energy.textContent =      productInfo.nutriments.energy_100g + " g";
     productValues100g.fat.textContent =         productInfo.nutriments.fat_100g + " g";
-    // productValues100g.sFat.textContent =        productInfo.nutriments.saturated-fat_100g;
+    productValues100g.sFat.textContent =        productInfo.nutriments["saturated-fat_100g"] + " g";
     productValues100g.proteins.textContent =    productInfo.nutriments.proteins_100g + " g";
     productValues100g.sugar.textContent =       productInfo.nutriments.sugars_100g + " g";
 }

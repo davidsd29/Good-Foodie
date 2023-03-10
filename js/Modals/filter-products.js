@@ -1,9 +1,7 @@
 import {filter} from './variable.js';
-import {totalSugars, totalSalt, totalCarb, totalProteins} from './render-products.js';
+import {totalSugars, totalSalt, totalCarb, totalProteins} from './rendering/render-products.js';
 
 function FilterProduct(filterlink) {
-    console.log("werkt")
-
     const groceriesList = JSON.parse(localStorage.getItem("groceries") || "[]");
     const linkParts = filterlink.split('0'); // Split the hash into an array of parts
     // let linkParts;
@@ -18,7 +16,6 @@ function FilterProduct(filterlink) {
             break; 
 
             case "salt":
-                console.log(totalSalt)
                 filter.value.textContent = Number(Math.round(totalSalt)) + " g"
             break;        
             

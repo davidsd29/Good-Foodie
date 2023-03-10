@@ -1,7 +1,7 @@
-import { GetProductData } from '../API/fetch-product.js';
-import { filter, popUp } from './variable.js';
-import { DeleteProduct } from './saving/storage-product.js';
-import { GetUserID } from './saving/storage-card.js';
+import { ReplanishData } from '../../API/fetch-product.js';
+import { filter, popUp } from '../variable.js';
+import { DeleteProduct } from '../saving/storage-product.js';
+import { GetUserID } from '../saving/storage-card.js';
 
 const filterToggle = document.querySelector("input[name='open-filter']");
 const filterSumbit = document.getElementById('filter-submit');
@@ -34,8 +34,6 @@ function DataIsLoading(loading) {
 }
 
 function RenderGroceriesListProduct(productInfo, productAmount) {
-    console.log(productInfo.nutriments)
-
 	const groceriesList = JSON.parse(localStorage.getItem('groceries') || '[]');
 	let listItem;
 
@@ -134,40 +132,44 @@ function CheckListAmount(list) {
 }
 
 function GetGroceriesList(empty) {
-	// whille loop hier
-	// if (!empty) {
-	//     // Empty groceriesList HTML
-	//     while (listFrame.children.length > 1) {
-	//         listFrame.removeChild(listFrame.lastChild);
-	//     }
-	// }
-
 	const groceriesList = JSON.parse(localStorage.getItem('groceries') || '[]');
 	const userID = GetUserID();
+	const hash = window.location.hash; // Get the hash from the URL
+	const linkParts = hash.split('/'); // Split the hash into an array of parts
 
 	const list = groceriesList
 		.filter((item) => item.user_id === userID)
 		.map((x) => x);
+		
+	const fetchArrays = list.map((item) => {
+		return ReplanishData(item, 'listItem');
+	});
+
+	// whille loop hier
+	if (!empty) {
+	    // Empty groceriesList HTML
+	    while (listFrame.children.length > 1) {
+	        listFrame.removeChild(listFrame.lastChild);
+	    }
+
+		// Get amount of all the products
+		groceriesList.forEach((item) => {
+			if (item.user_id === userID)
+			listProductsAmount = listProductsAmount + item.productAmount;
+		});
+	}
+
 	CheckListAmount(list.length);
 
-	// Get amount of all the products
-	groceriesList.forEach((item) => {
-		if (item.user_id === userID)
-			listProductsAmount = listProductsAmount + item.productAmount;
-	});
-
-	const hash = window.location.hash; // Get the hash from the URL
-	const linkParts = hash.split('/'); // Split the hash into an array of parts
-
 	// Check if filtertoggle is not active or if there is no filter in url
-	if (filterToggle.checked == false || linkParts.length < 3)
-		SetProductAmount(listProductsAmount);
+	if (filterToggle.checked == false || linkParts.length < 3) SetProductAmount(listProductsAmount);
 
-	// Get all the products of the user check on ID number
-
-	list.forEach((item) => {
-		GetProductData(item, 'listItem');
-	});
+	Promise.all(fetchArrays).then(data => {
+		data.forEach(list => {
+			DataIsLoading(false);
+			RenderGroceriesListProduct(list.product, list.productAmount);
+		});
+	})
 }
 
 function SetProductAmount(amount) {

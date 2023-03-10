@@ -1,9 +1,6 @@
-import { editForm } from '../Modals/variable.js';
-
 function PostProductData(barcode) {
   const productData = {
     name: editFrom.name.value,
-    // img: form.img,
     sugar: editFrom.sugar.value,
     salt: editFrom.salt.value,
     nutrition: editFrom.nutrition.value

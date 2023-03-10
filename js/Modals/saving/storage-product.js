@@ -1,4 +1,4 @@
-import {GetGroceriesList, CheckListAmount, SetProductAmount} from '../render-products.js';
+import {GetGroceriesList, CheckListAmount, SetProductAmount} from '../rendering/render-products.js';
 import { GetUserID } from './storage-card.js';
 
 const completePopUp = document.getElementById("complete-pop-up");

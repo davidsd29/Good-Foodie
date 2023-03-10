@@ -1,14 +1,14 @@
 import {scan, popUp} from './variable.js';
 import {CreateBarcodeImage} from '../API/create-card.js';
+import { DataIsLoading,} from './rendering/render-products.js';
 
 const scanner= new Html5Qrcode("scanner");
-
 const fileCodeReader = new Html5Qrcode("reader");
 const errorText = document.getElementById("error-text");
 
 // Start scanning of the camera for product
 function StartCameraScan (type) {
-
+    DataIsLoading(true);
     // Set delay on appearance of stopscan button
     setTimeout(function() {scan.stop.style.display = "block";}, 1400);
 
@@ -42,10 +42,10 @@ function StartCameraScan (type) {
             // let barcode = 8715600243949;
             
             // AA
-            // let barcode = 87365290;
+            let barcode = 87365290;
 
             // Energy
-            let barcode = 8710624030667;
+            // let barcode = 8710624030667;
 
             const hash = window.location.hash; // Get the hash from the URL
             const linkParts = hash.split('/'); // Split the hash into an array of parts
@@ -54,10 +54,11 @@ function StartCameraScan (type) {
               let number = 2622213062385;
             CreateBarcodeImage(number)
          }
-
-
         // DisplayErrorPopUp(err);
-    });
+
+
+    })
+    .finally( DataIsLoading(false) );
 }
 
 

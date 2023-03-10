@@ -3,14 +3,11 @@ import {popUp} from '../variable.js';
 
 function SaveUser(user) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    console.log(users);
 
     if (users.length === 0) {
-      console.log("no users in de list");
       localStorage.setItem("users", JSON.stringify([user]));
     } else {
         users.push(user);
-        console.log(user)
         localStorage.setItem("users", JSON.stringify(users));
 
     }
